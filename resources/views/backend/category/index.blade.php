@@ -39,47 +39,22 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Tên Danh mục</th>
-                                <th>Thời gian</th>
-                                <th>Status</th>
                                 <th>Slug</th>
-                                <th>description</th>
+                                <th>Created_at</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($categories as $category)
                             <tr>
-                                <td>183</td>
-                                <td>abc</td>
-                                <td>11-7-2014</td>
-                                <td><span class="tag tag-success">Approved</span></td>
-                                <td>a-b-c</td>
-                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                                <td>{{ $category->id }}</td>
+                                <td>{{ $category->name }}</td>
+                                <td>{{ $category->slug }}</td>
+                                <td>{{ $category->created_at }}</td>
                             </tr>
-                            <tr>
-                                <td>219</td>
-                                <td>abc</td>
-                                <td>11-7-2014</td>
-                                <td><span class="tag tag-warning">Pending</span></td>
-                                <td>a-b-c</td>
-                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                            </tr>
-                            <tr>
-                                <td>657</td>
-                                <td>abc</td>
-                                <td>11-7-2014</td>
-                                <td><span class="tag tag-primary">Approved</span></td>
-                                <td>a-b-c</td>
-                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                            </tr>
-                            <tr>
-                                <td>175</td>
-                                <td>abc</td>
-                                <td>11-7-2014</td>
-                                <td><span class="tag tag-danger">Denied</span></td>
-                                <td>a-b-c</td>
-                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                            </tr>
+                            @endforeach
                             </tbody>
                         </table>
+                        {!! $categories->links() !!}
                     </div>
                     <!-- /.card-body -->
                 </div>
