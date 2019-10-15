@@ -1,13 +1,14 @@
 <?php
 
 namespace App;
-
+use App\Models\Product;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    protected $table = 'users';
     use Notifiable;
 
     /**
@@ -36,4 +37,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+   public function userInfo(){
+        return $this->hasOne('App\Models\UserInfo');
+    }
+    public function products(){
+        return $this->hasMany(Product::class);
+    }
 }

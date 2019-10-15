@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-
+use App\Models\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -15,6 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+
         $categories = Category::paginate(4);
         return view('backend.category.index')->with('categories',$categories);
     }
@@ -48,7 +49,13 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $products = Category::find($id)->products()->where('status',2)->get();
+        // $category = Category::find($id);
+        // $products = $category->products;
+        foreach ($products as $product) {
+            echo $product->name . "\n";
+        }
+        dd();
     }
 
     /**

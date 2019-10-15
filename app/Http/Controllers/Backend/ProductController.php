@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-
+// use App\Models\category;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -16,7 +16,11 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::paginate(5);
+        // $products = Product::with('category')->get();
         return view('backend.product.index')->with('products',$products);
+        // foreach ($products as $product) {
+        //     echo $product->category->name;
+        // }
     }
 
     /**
@@ -48,7 +52,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::find($id);
+        // dd($product);
+        $category = $product->category;
+        dd($category);
     }
 
     /**

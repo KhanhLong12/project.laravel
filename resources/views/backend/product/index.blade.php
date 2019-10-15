@@ -39,6 +39,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Tên sản phẩm</th>
+                                <th>danh mục</th>
+                                <th>Người tạo</th>
                                 <th>Status</th>
                                 <th>Mô tả</th>
                             </tr>
@@ -48,6 +50,8 @@
                                     <tr>
                                         <td>{{ $product->id }}</td>
                                         <td>{{ $product->name }}</td>
+                                        <td>{{ $product->category->name }}</td>
+                                        <td>{{ $product->user->name }}</td>
                                         <td><span class="tag tag-success">{{ $product->status }}</span></td>
                                         <td>{{ $product->content }}</td>
                                     </tr>

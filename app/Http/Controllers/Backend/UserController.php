@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-
+use App\Models\UserInfo;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
@@ -50,7 +50,13 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        // $user = User::find($id);
+        // $userInfo = $user->userInfo;
+        // dd($userInfo);
+        $userInfo = Userinfo::find(1);
+        // dd($userInfo);
+        $user = $userInfo->User;
+        dd($user);
     }
 
     /**
