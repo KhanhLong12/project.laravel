@@ -1,4 +1,14 @@
 @extends('fontend.layouts.master')
+@section('css')
+	<link rel="stylesheet" type="text/css" href="/fontend/styles/bootstrap4/bootstrap.min.css">
+	<link href="/fontend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/fontend/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+	<link rel="stylesheet" type="text/css" href="/fontend/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+	<link rel="stylesheet" type="text/css" href="/fontend/plugins/OwlCarousel2-2.2.1/animate.css">
+	<link rel="stylesheet" type="text/css" href="/fontend/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="/fontend/styles/shop_styles.css">
+	<link rel="stylesheet" type="text/css" href="/fontend/styles/shop_responsive.css">
+@endsection
 @section('content')
 	<div class="home">
 		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="/fontend/images/shop_background.jpg"></div>
@@ -590,4 +600,20 @@
 			</div>
 		</div>
 	</div>
+@endsection
+@section('js')
+	<script src="/fontend/js/jquery-3.3.1.min.js"></script>
+	<script src="/fontend/styles/bootstrap4/popper.js"></script>
+	<script src="/fontend/styles/bootstrap4/bootstrap.min.js"></script>
+	<script src="/fontend/plugins/greensock/TweenMax.min.js"></script>
+	<script src="/fontend/plugins/greensock/TimelineMax.min.js"></script>
+	<script src="/fontend/plugins/scrollmagic/ScrollMagic.min.js"></script>
+	<script src="/fontend/plugins/greensock/animation.gsap.min.js"></script>
+	<script src="/fontend/plugins/greensock/ScrollToPlugin.min.js"></script>
+	<script src="/fontend/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+	<script src="/fontend/plugins/easing/easing.js"></script>
+	<script src="/fontend/plugins/Isotope/isotope.pkgd.min.js"></script>
+	<script src="/fontend/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+	<script src="/fontend/plugins/parallax-js-master/parallax.min.js"></script>
+	<script src="/fontend/js/shop_custom.js"></script>
 @endsection

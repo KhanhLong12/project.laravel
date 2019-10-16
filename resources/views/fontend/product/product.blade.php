@@ -1,4 +1,13 @@
 @extends('fontend.layouts.master')
+@section('css')
+	<link rel="stylesheet" type="text/css" href="/fontend/styles/bootstrap4/bootstrap.min.css">
+	<link href="/fontend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/fontend/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+	<link rel="stylesheet" type="text/css" href="/fontend/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+	<link rel="stylesheet" type="text/css" href="/fontend/plugins/OwlCarousel2-2.2.1/animate.css">
+	<link rel="stylesheet" type="text/css" href="/fontend/styles/product_styles.css">
+	<link rel="stylesheet" type="text/css" href="/fontend/styles/product_responsive.css">
+@endsection
 @section('content')
 	<div class="single_product">
 		<div class="container">
@@ -245,4 +254,17 @@
 			</div>
 		</div>
 	</div>
+@endsection
+@section('js')
+	<script src="/fontend/js/jquery-3.3.1.min.js"></script>
+	<script src="/fontend/styles/bootstrap4/popper.js"></script>
+	<script src="/fontend/styles/bootstrap4/bootstrap.min.js"></script>
+	<script src="/fontend/plugins/greensock/TweenMax.min.js"></script>
+	<script src="/fontend/plugins/greensock/TimelineMax.min.js"></script>
+	<script src="/fontend/plugins/scrollmagic/ScrollMagic.min.js"></script>
+	<script src="/fontend/plugins/greensock/animation.gsap.min.js"></script>
+	<script src="/fontend/plugins/greensock/ScrollToPlugin.min.js"></script>
+	<script src="/fontend/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+	<script src="/fontend/plugins/easing/easing.js"></script>
+	<script src="/fontend/js/product_custom.js"></script>
 @endsection
