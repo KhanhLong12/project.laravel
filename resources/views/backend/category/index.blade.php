@@ -41,6 +41,7 @@
                                 <th>Tên Danh mục</th>
                                 <th>Slug</th>
                                 <th>Created_at</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -50,6 +51,33 @@
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->slug }}</td>
                                 <td>{{ $category->created_at }}</td>
+                                <td>
+                                    <a href="{{ route('backend.category.edit', $category->id) }}"><i class="fas fa-edit"></i></a>
+                                        {{-- <a href="{{ route('backend.category.destroy', $category->id) }}" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-trash-alt"></i></a>
+                                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                  <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle" style="display: inline-block;">Announce</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                         <h4>Bạn chắc chắn muốn xóa?</h4>
+                                                      </div>
+                                                      <div class="modal-footer"> --}}
+                                                            {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+                                                            <form style="display: inline-block;" action="{{ route('backend.category.destroy', $category->id) }}" method="post" accept-charset="utf-8">
+                                                                @csrf
+                                                                {{method_field('delete')}}
+                                                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                            </form>
+                                                    {{-- </div>
+                                                </div>
+                                             </div>
+                                        </div> --}}
+                                </td>
                             </tr>
                             @endforeach
                             </tbody>

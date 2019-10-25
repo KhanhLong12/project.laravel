@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Image;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreProductRequest;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -17,7 +23,7 @@ class ProductController extends Controller
     {
         $products = Product::paginate(5);
         // $products = Product::with('category')->get();
-        return view('backend.product.index')->with('products',$products);
+        return view('backend.product.index')->with(['products' => $products]);
         // foreach ($products as $product) {
         //     echo $product->category->name;
         // }
@@ -30,7 +36,19 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('backend.product.create');
+        // Storage::disk('local')->put('file.txt','content');
+        // $contents = Storage::disk('local')->get('file.txt');
+        // $exists = Storage::disk('local')->exists('file.txt');
+        // dd($exists);
+        // $url = Storage::url('file.txt');//lấy cái url
+        // Storage::disk('local')->copy('file.txt', 'file1.txt');
+        // Storage::disk('avatar')->move('file.txt', 'file1.txt');
+
+        // dd(1);
+        // return Storage::disk('local')->download('file.txt','long.txt');//dowload file
+
+        $categories = Category::get();
+        return view('backend.product.create')->with(['categories' => $categories]);
     }
 
     /**
@@ -39,9 +57,106 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        // if ($request->hasFile('images')) {
+        //     $images = $request->file('images');
+        //     // foreach ($images as $image) {
+        //     //     $image->store('images_11');
+        //     foreach ($images as $image) {
+        //         $name = $image->getClientOriginalName();
+        //         $image->move('images_11', $name);
+        //     }
+        // }else{
+        //     dd(5);
+        // }
+        // dd(4);
+        // if ($request->hasFile('image')) {
+        //     // $file = $request->file('image');
+        //     // $path = $file->store('images_5');
+        //     $file = $request->file('image');
+        //     $name = $file->getClientOriginalName();
+        //     $file->move('images_10', $name);
+        //     //path = url/images_10/.$name
+        // }else{
+        //     echo "không";
+        // }
+        // dd(1);
+        // $validatedData = $request->validate([
+        //     'name'         => 'required|min:10|max:255',
+        //     'content'      => 'required|min:10|max:500',
+        //     'status'       => 'required',
+        //     'origin_price' => 'required|numeric',
+        //     'sale_price'   => 'required|numeric',
+        // ]);
+        // $validator = Validator::make($request->all(),
+        //     [
+        //         'name'         => 'required|min:10|max:255',
+        //         'origin_price' => 'required|numeric',
+        //         'sale_price'   => 'required|numeric',
+        //         'content'      => 'required|min:10|max:500'
+        //     ],
+        //     [
+        //         'required' => ':attribute Không được để trống',
+        //         'min' => ':attribute Không được nhỏ hơn :min',
+        //         'max' => ':attribute Không được lớn hơn :max'
+        //     ],
+        //     [
+        //         'name' => 'Tên sản phẩm',
+        //         'origin_price' => 'Giá gốc',
+        //         'sale_price' => 'Giá bán',
+        //         'content' => 'nội dung'
+        //     ]
+        // );
+        // if ($validator->errors()){
+        //     return back()
+        //         ->withErrors($validator)
+        //         ->withInput();
+        // }
+
+        // dd($request);
+        //ảnh
+        // $info_images = [];
+        // if ($request->hasFile('images')) {
+
+        //     $images = $request->file('images');
+        //     foreach ($images as $key => $image) {
+        //         $namefile = $image->getClientOriginalName();//lấy tên gốc của ảnh
+        //         $url = 'storage/' . $namefile;
+        //         Storage::disk('public')->putFileAs('products', $image , $namefile);
+        //         $info_images[] = [
+        //             'url' => $url,
+        //             'name' => $namefile
+        //         ];
+        //     }
+        //         // $image->store('images_11');
+        //     // foreach ($images as $image) {
+        //     //     $name = $image->getClientOriginalName();
+        //     //     $image->move('images_11', $name);
+        //     // }
+        // }
+        // else{
+        //     echo "không";
+        // }
+        $product = new Product();
+        $product->name = $request->get('name');
+        $product->slug = \Illuminate\Support\Str::slug($request->get('name'));
+        $product->category_id = $request->get('category_id');
+        $product->sale_price = $request->get('sale_price');
+        $product->origin_price = $request->get('origin_price');
+        $product->content = $request->get('content');
+        $product->status = $request->get('status');
+        $product->user_id = Auth::user()->id;
+        $product->save();
+
+        // foreach ($info_images as $img) {
+        //     $image = new Image();
+        //     $image->name = $img['name'];
+        //     $image->path = $img['url'];
+        //     $image->product_id= $product->id;
+        //     $image->save();
+        // }
+        return redirect()->route('backend.product.index');
     }
 
     /**
@@ -66,7 +181,12 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = Product::find($id);
+        $categories = Category::get();
+        return view('backend.product.edit')->with([
+            'categories' => $categories,
+            'item' => $item
+        ]);
     }
 
     /**
@@ -76,9 +196,19 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreProductRequest $request, $id)
     {
-        //
+        $product = Product::find($id);
+        $product->name = $request->get('name');
+        $product->slug = \Illuminate\Support\Str::slug($request->get('name'));
+        $product->category_id = $request->get('category_id');
+        $product->sale_price = $request->get('sale_price');
+        $product->origin_price = $request->get('origin_price');
+        $product->content = $request->get('content');
+        $product->status = $request->get('status');
+        $product->user_id = Auth::user()->id;
+        $product->save();
+        return redirect()->route('backend.product.index');
     }
 
     /**
@@ -89,6 +219,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::destroy($id);
+        return redirect()->route('backend.product.index');
     }
 }

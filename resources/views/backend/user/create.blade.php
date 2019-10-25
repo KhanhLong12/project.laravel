@@ -23,26 +23,43 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form">
+                    <form role="form" method="post" action="{{ route('backend.user.store') }}">
+                         {{csrf_field()}}
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Tên</label>
-                                <input type="text" class="form-control" id="" placeholder="Tên người dùng">
+                                <label for="exampleInputEmail1">Họ và Tên</label>
+                                <input name="username" type="text" class="form-control" id="" placeholder="Name" value="{{ old('username') }}">
+                                @error('username')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email</label>
-                                <input type="email" class="form-control" id="" placeholder="Email">
+                                <input name="email" type="email" class="form-control" id="" placeholder="Email" value="{{ old('email') }}">
+                                @error('email')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Số điện thoại</label>
+                                <input name="phone" type="text" class="form-control" id="" placeholder="phone" value="{{ old('phone') }}">
+                                @error('phone')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Mật khẩu</label>
-                                <input type="password" class="form-control" id="">
+                                <input name="password" type="password" class="form-control" id="" placeholder="password">
+                                @error('password')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label>Quyền</label>
-                                <select class="form-control select2" style="width: 100%;">
+                                <select name="role" class="form-control select2" style="width: 100%;">
                                     <option>--Chọn quyền---</option>
-                                    <option>Admin</option>
-                                    <option>User</option>
+                                    <option value="1">Admin</option>
+                                    <option value="0">User</option>
                                 </select>
                             </div>
                         </div>

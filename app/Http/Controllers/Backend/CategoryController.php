@@ -5,6 +5,7 @@ use App\Models\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -27,7 +28,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.category.create');
+        $categories = Category::get();
+        return view('backend.category.create')->with([
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -36,9 +40,16 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
+        $category = new Category();
+        $category->name = $request->get('name'); 
+        $category->slug = \Illuminate\Support\Str::slug($request->get('name'));
+        $category->parent_id = $request->get('parent_id');
+        $category->depth = rand(0,1);
+        $category->description = $request->get('description');
+        $category->save();
+        return redirect()->route('backend.category.index');
     }
 
     /**
@@ -49,13 +60,11 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $products = Category::find($id)->products()->where('status',2)->get();
-        // $category = Category::find($id);
-        // $products = $category->products;
+        $products = Category::find($id)->products()->where('status',2)->get();//tìm sản phẩm có trạng thái là 2 thuộc cái id category cha
         foreach ($products as $product) {
             echo $product->name . "\n";
         }
-        dd();
+        dd($products);
     }
 
     /**
@@ -66,7 +75,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = Category::find($id);
+        $categories = Category::get();
+        return view('backend.category.edit')->with([
+            'categories' => $categories,
+            'item' => $item
+        ]);
     }
 
     /**
@@ -76,9 +90,15 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreCategoryRequest $request, $id)
     {
-        //
+        $category = Category::find($id);
+        $category->name = $request->get('name');
+        $category->slug = \Illuminate\Support\Str::slug($request->get('name'));
+        $category->parent_id = $request->get('parent_id');
+        $category->description = $request->get('description');
+        $category->save();
+        return redirect()->route('backend.category.index');
     }
 
     /**
@@ -89,6 +109,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Category::destroy($id);
+        return redirect()->route('backend.category.index');
     }
 }

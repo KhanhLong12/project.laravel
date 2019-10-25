@@ -14,7 +14,13 @@
                     <img src="/backend/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">Nguyễn Khánh Long</a>
+                    <a href="#" class="d-block">
+{{--                         @if( Illuminate\Support\Facades\Auth::user()->role == 1 )
+                            xin chào Admin
+                        @endif --}}
+                        {{ Illuminate\Support\Facades\Auth::user()->name }}
+                    </a>
+                        <a href="#" class="d-block" style="color: blue">{{ Illuminate\Support\Facades\Auth::user()->email }} </a>
                 </div>
             </div>
 

@@ -43,6 +43,7 @@
                                 <th>Người tạo</th>
                                 <th>Status</th>
                                 <th>Mô tả</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -52,8 +53,16 @@
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->category->name }}</td>
                                         <td>{{ $product->user->name }}</td>
-                                        <td><span class="tag tag-success">{{ $product->status }}</span></td>
+                                        <td>{{ $product->status }}</td>
                                         <td>{{ $product->content }}</td>
+                                        <td>
+                                            <a href="{{ route('backend.product.edit', $product->id) }}"><i class="fas fa-edit"></i></a>
+                                            <form style="display: inline-block;" action="{{ route('backend.product.destroy', $product->id) }}" method="post" accept-charset="utf-8">
+                                                @csrf
+                                                {{method_field('delete')}}
+                                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

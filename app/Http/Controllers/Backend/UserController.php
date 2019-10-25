@@ -5,6 +5,7 @@ use App\Models\UserInfo;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest;
 
 class UserController extends Controller
 {
@@ -37,9 +38,17 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        // dd($request);
+        $user = new User();
+        $user->name = $request->get('username');
+        $user->email = $request->get('email');
+        $user->phone = $request->get('phone');
+        $user->password = bcrypt($request->get('password'));
+        $user->role = $request->get('role');
+        $user->save();
+        return redirect()->route('backend.user.index');
     }
 
     /**

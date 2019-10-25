@@ -23,19 +23,26 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form">
+                    <form role="form" method="post" action="{{ route('backend.category.store') }}">
+                        @csrf
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" id="" placeholder="Tên category">
+                                <input value="{{old('name')}}" name="name" type="text" class="form-control" id="" placeholder="Tên category">
+                                @error('name')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label>parent category</label>
-                                <select class="form-control select2" style="width: 100%;">
-                                    <option>--Danh mục cha---</option>
+                                <select name="parent_id" class="form-control select2" style="width: 100%;">
+                                    <option value="0">--Danh mục cha---</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="exampleInputFile">Thumbnail</label>
                                 <div class="input-group">
                                     <div class="custom-file">
@@ -46,14 +53,13 @@
                                         <span class="input-group-text" id="">Upload</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Slug</label>
-                                <input type="text" class="form-control" id="">
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label>Description</label>
-                                <input type="text" class="form-control" id="">
+                                <input value="{{ old('description') }}" name="description" type="text" class="form-control" id="" placeholder="Mô tả">
+                                @error('description')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <!-- /.card-body -->
