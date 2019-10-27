@@ -57,11 +57,30 @@
                                         <td>{{ $product->content }}</td>
                                         <td>
                                             <a href="{{ route('backend.product.edit', $product->id) }}"><i class="fas fa-edit"></i></a>
-                                            <form style="display: inline-block;" action="{{ route('backend.product.destroy', $product->id) }}" method="post" accept-charset="utf-8">
-                                                @csrf
-                                                {{method_field('delete')}}
-                                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                            </form>
+                                            <a href="{{ route('backend.product.destroy', $product->id) }}" data-toggle="modal" data-target="#exampleModalCenter-{{$product->id}}"><i class="fas fa-trash-alt"></i></a>
+                                            <div class="modal fade" id="exampleModalCenter-{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                      <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                          <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle" style="display: inline-block;">Bạn có chắc chắn xóa ko?</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                              <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                             <h4>Bạn chắc chắn muốn xóa?</h4>
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <form style="display: inline-block;" action="{{ route('backend.product.destroy', $product->id) }}" method="post" accept-charset="utf-8">
+                                                                @csrf
+                                                                {{method_field('delete')}}
+                                                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                 </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

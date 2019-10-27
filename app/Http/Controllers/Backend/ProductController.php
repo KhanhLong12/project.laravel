@@ -116,28 +116,28 @@ class ProductController extends Controller
 
         // dd($request);
         //ảnh
-        // $info_images = [];
-        // if ($request->hasFile('images')) {
+        $info_images = [];
+        if ($request->hasFile('images')) {
 
-        //     $images = $request->file('images');
-        //     foreach ($images as $key => $image) {
-        //         $namefile = $image->getClientOriginalName();//lấy tên gốc của ảnh
-        //         $url = 'storage/' . $namefile;
-        //         Storage::disk('public')->putFileAs('products', $image , $namefile);
-        //         $info_images[] = [
-        //             'url' => $url,
-        //             'name' => $namefile
-        //         ];
-        //     }
-        //         // $image->store('images_11');
-        //     // foreach ($images as $image) {
-        //     //     $name = $image->getClientOriginalName();
-        //     //     $image->move('images_11', $name);
-        //     // }
-        // }
-        // else{
-        //     echo "không";
-        // }
+            $images = $request->file('images');
+            foreach ($images as $key => $image) {
+                $namefile = $image->getClientOriginalName();//lấy tên gốc của ảnh
+                $url = 'storage/' . $namefile;
+                Storage::disk('public')->putFileAs('products', $image , $namefile);//chuyeern tuwf thu muc nguon sang thu muc dich
+                $info_images[] = [
+                    'url' => $url,
+                    'name' => $namefile
+                ];
+            }
+                // $image->store('images_11');
+            // foreach ($images as $image) {
+            //     $name = $image->getClientOriginalName();
+            //     $image->move('images_11', $name);
+            // }
+        }
+        else{
+            echo "không";
+        }
         $product = new Product();
         $product->name = $request->get('name');
         $product->slug = \Illuminate\Support\Str::slug($request->get('name'));
@@ -149,13 +149,13 @@ class ProductController extends Controller
         $product->user_id = Auth::user()->id;
         $product->save();
 
-        // foreach ($info_images as $img) {
-        //     $image = new Image();
-        //     $image->name = $img['name'];
-        //     $image->path = $img['url'];
-        //     $image->product_id= $product->id;
-        //     $image->save();
-        // }
+        foreach ($info_images as $img) {
+            $image = new Image();
+            $image->name = $img['name'];
+            $image->path = $img['url'];
+            $image->product_id= $product->id;
+            $image->save();
+        }
         return redirect()->route('backend.product.index');
     }
 

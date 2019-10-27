@@ -46,7 +46,7 @@ class CategoryController extends Controller
         $category->name = $request->get('name'); 
         $category->slug = \Illuminate\Support\Str::slug($request->get('name'));
         $category->parent_id = $request->get('parent_id');
-        $category->depth = rand(0,1);
+        $category->depth = 0;
         $category->description = $request->get('description');
         $category->save();
         return redirect()->route('backend.category.index');

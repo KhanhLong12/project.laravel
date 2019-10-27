@@ -46,6 +46,9 @@
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('category_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
  {{--                            <div class="form-group">
                                 <label>Thương hiệu sản phẩm</label>
@@ -81,11 +84,11 @@
                                 <label for="exampleInputEmail1">Mô tả sản phẩm</label>
                                 <textarea class="textarea" name="content" placeholder="Place some text here"
                                           style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ old('content') }}</textarea>
-                                          @error('content')
+                                @error('content')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            {{-- <div class="form-group">
+                            <div class="form-group">
                                 <label for="exampleInputFile">Hình ảnh sản phẩm</label>
                                 <div class="input-group">
                                     <div class="custom-file">
@@ -96,7 +99,13 @@
                                         <span class="input-group-text" id="">Upload</span>
                                     </div>
                                 </div>
-                            </div> --}}
+                                @error('images')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                @error('images.*')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="form-group">
                                 <label>Trạng thái sản phẩm</label>
                                 <select name="status" class="form-control select2" style="width: 100%;">
@@ -105,6 +114,9 @@
                                     <option value="1">Mở bán</option>
                                     <option value="2">Hết hàng</option>
                                 </select>
+                                @error('status')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <!-- /.card-body -->
