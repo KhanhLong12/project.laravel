@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Auth;
+use Illuminate\Support\Facades\Gate;
 class HomeController extends Controller
 {
     /**
@@ -23,6 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('backend.dashboard_full');
+        // $user = Auth::user();
+        // if (Gate::allows('check-role', $user)) {
+            return view('backend.dashboard_full');
+        // }else{
+        //     dd('không phải admin');
+        // }
     }
 }

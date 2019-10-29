@@ -2,7 +2,7 @@
 @section('content-header')
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Danh sách category</h1>
+                <h1 class="m-0 text-dark">Danh sách category <a href="{{ route('backend.category.create') }}"><i class="fas fa-plus" style="color: blue;font-size: 20px;"></i></a></h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">

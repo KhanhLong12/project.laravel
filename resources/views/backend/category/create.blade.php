@@ -65,7 +65,7 @@
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-default">Huỷ bỏ</button>
+                            <a href="{{ route('backend.category.index') }}" class="btn btn-default">Huỷ bỏ</a>
                             <button type="submit" class="btn btn-sucess">Tạo mới</button>
                         </div>
                     </form>

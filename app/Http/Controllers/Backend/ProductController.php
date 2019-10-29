@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
+use Auth\User;
 
 class ProductController extends Controller
 {
@@ -21,9 +23,15 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+
         $products = Product::paginate(5);
+        if (Gate::allows('check-role', $user)) {
+            return view('backend.product.index')->with(['products' => $products]);
+        }else{
+            dd('không thể xem vì không phải admin');
+        }
         // $products = Product::with('category')->get();
-        return view('backend.product.index')->with(['products' => $products]);
         // foreach ($products as $product) {
         //     echo $product->category->name;
         // }
@@ -46,9 +54,13 @@ class ProductController extends Controller
 
         // dd(1);
         // return Storage::disk('local')->download('file.txt','long.txt');//dowload file
-
         $categories = Category::get();
-        return view('backend.product.create')->with(['categories' => $categories]);
+        $user = Auth::user();
+        if (Gate::allows('check-role', $user)) {
+            return view('backend.product.create')->with(['categories' => $categories]);
+        }else{
+            dd('không thể tạo vì không phải admin');
+        }
     }
 
     /**
@@ -114,7 +126,6 @@ class ProductController extends Controller
         //         ->withInput();
         // }
 
-        // dd($request);
         //ảnh
         $info_images = [];
         if ($request->hasFile('images')) {
@@ -183,10 +194,31 @@ class ProductController extends Controller
     {
         $item = Product::find($id);
         $categories = Category::get();
-        return view('backend.product.edit')->with([
+        $user = Auth::user();
+        
+        // if ($user->can('update', $item)) {
+        //     return view('backend.product.edit')->with([
+        //         'categories' => $categories,
+        //         'item' => $item
+        //     ]);
+        // }else{
+        //     dd('aaaabc');
+        // }
+        
+        // return view('backend.product.edit')->with([
+        //     'categories' => $categories,
+        //     'item' => $item
+        // ]);
+        if (Gate::allows('update-product', $item)){//nếu cho up date thì return về ..
+            // dd('có quyền');
+            return view('backend.product.edit')->with([
             'categories' => $categories,
             'item' => $item
         ]);
+        }else{
+            dd('Bạn không phải là người tạo sản phẩm này');
+        }
+        
     }
 
     /**

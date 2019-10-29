@@ -85,18 +85,19 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            {{-- <div class="form-group">
+                            <div class="form-group">
                                 <label for="exampleInputFile">Hình ảnh sản phẩm</label>
+                                <img src="storage/{{ $item->path }}" width=100px height=100px>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="images[]" multiple>
+                                        <input type="file" value="" class="custom-file-input" id="exampleInputFile" name="images[]" multiple>
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                     </div>
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="">Upload</span>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                             <div class="form-group">
                                 <label>Trạng thái sản phẩm</label>
                                 <select name="status" class="form-control select2" style="width: 100%;">
