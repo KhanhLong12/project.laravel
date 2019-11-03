@@ -3,6 +3,16 @@
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Danh sách category <a href="{{ route('backend.category.create') }}"><i class="fas fa-plus" style="color: blue;font-size: 20px;"></i></a></h1>
+                @if(session()->has('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session()->get('success') }}
+                    </div> 
+                @endif
+                @if(session()->has('success1'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session()->get('success1') }}
+                    </div> 
+                @endif
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -71,7 +81,7 @@
                                                             <form style="display: inline-block;" action="{{ route('backend.category.destroy', $category->id) }}" method="post" accept-charset="utf-8">
                                                                 @csrf
                                                                 {{method_field('delete')}}
-                                                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                                <button type="submit" class="btn btn-danger">Đồng ý</button>
                                                             </form>
                                                     </div>
                                                 </div>

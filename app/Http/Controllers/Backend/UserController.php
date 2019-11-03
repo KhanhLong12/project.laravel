@@ -47,7 +47,12 @@ class UserController extends Controller
         $user->phone = $request->get('phone');
         $user->password = bcrypt($request->get('password'));
         $user->role = $request->get('role');
-        $user->save();
+        $save = $user->save();
+        if ($save) {
+            $request->session()->flash('success','Tạo danh mục thành công');
+        }else{
+            $request->session()->flash('error','Tạo danh mục không thành công');
+        }
         return redirect()->route('backend.user.index');
     }
 
@@ -76,7 +81,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        
+        $users = User::get();
+        $item = User::find($id);
+        return view('backend.user.edit')->with([
+            'users' => $users,
+            'item' => $item
+        ]);
     }
 
     /**
@@ -88,7 +98,17 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->get('username');
+        $user->phone = $request->get('phone');
+        $save = $user->save();
+        if ($save) {
+            $request->session()->flash('success1','Cập nhật thông tin thành công');
+        }else{
+            $request->session()->flash('error1','Cập nhật thông tin không thành công');
+        }
+        return redirect()->route('backend.user.index');
+
     }
 
     /**

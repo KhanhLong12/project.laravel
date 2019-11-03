@@ -48,7 +48,12 @@ class CategoryController extends Controller
         $category->parent_id = $request->get('parent_id');
         $category->depth = 0;
         $category->description = $request->get('description');
-        $category->save();
+        $save = $category->save();
+        if ($save) {
+            $request->session()->flash('success','Tạo sản phẩm thành công');
+        }else{
+            $request->session()->flash('error','Tạo sản phẩm không thành công');
+        }
         return redirect()->route('backend.category.index');
     }
 
@@ -97,7 +102,12 @@ class CategoryController extends Controller
         $category->slug = \Illuminate\Support\Str::slug($request->get('name'));
         $category->parent_id = $request->get('parent_id');
         $category->description = $request->get('description');
-        $category->save();
+        $save = $category->save();
+        if ($save) {
+            $request->session()->flash('success1','Cập nhật sản phẩm thành công');
+        }else{
+            $request->session()->flash('error1','Cập nhật sản phẩm không thành công');
+        }
         return redirect()->route('backend.category.index');
     }
 

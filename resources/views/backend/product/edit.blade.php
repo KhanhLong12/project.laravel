@@ -3,6 +3,11 @@
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Sửa sản phẩm</h1>
+                {{-- @if(session()->has('error1'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session()->get('error1') }}
+                    </div> 
+                @endif --}}
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -29,7 +34,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Tên sản phẩm</label>
-                                <input type="text" class="form-control" id="" placeholder="Điền tên sản phẩm " name="name" value="{{ $item->name }}  {{ old('name') }}">
+                                <input type="text" class="form-control" id="" placeholder="Điền tên sản phẩm " name="name" value="{{ $item->name }} ">
                                 {{-- @if($errors->has('name'))
                                     <div class="alert alert-danger">Lỗi</div>
                                     <div class="alert alert-danger">{{ $errors->first() }}</div>
@@ -61,7 +66,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Giá khuyến mại</label>
-                                        <input type="text" class="form-control" placeholder="Điền giá khuyến mại" name="sale_price" value=" {{ $item->sale_price }} {{ old('sale_price') }}">
+                                        <input type="text" class="form-control" placeholder="Điền giá khuyến mại" name="sale_price" value=" {{ $item->sale_price }}">
                                         @error('sale_price')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -70,7 +75,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Giá bán</label>
-                                        <input type="text" class="form-control" placeholder="Giá nhập vào" name="origin_price" value="{{ $item->origin_price }} {{ old('origin_price') }}">
+                                        <input type="text" class="form-control" placeholder="Giá nhập vào" name="origin_price" value="{{ $item->origin_price }}">
                                         @error('origin_price')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -80,17 +85,45 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Mô tả sản phẩm</label>
                                 <textarea class="textarea" name="content" placeholder="Place some text here"
-                                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"> {{ $item->content }} {{ old('content') }}</textarea>
-                                          @error('content')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+                                          style="width: 100%; height: 500px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"> {{ $item->content }}</textarea>
+                                        @error('content')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputFile">Hình ảnh sản phẩm</label>
-                                <img src="storage/{{ $item->path }}" width=100px height=100px>
+                                    <label>Hình ảnh sản phẩm đã có :</label>
+                                <br>
+                                @foreach($images as $image)
+                                    <a href="{{ $image->name }}" data-toggle="modal" data-target="#exampleModalCenter-{{$image->id}}"><img src="/{{ $image->path }}" width=100px height=100px></a>
+                                    {{-- <div class="modal fade" id="exampleModalCenter-{{$image->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                      <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                          <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle" style="display: inline-block;">announce</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                              <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                             <h4>Bạn muốn xóa ảnh này?</h4>
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                                <button  type="button" class="btn btn-secondary" data-dismiss="modal">Giữ lại ảnh</button>
+                                                                <form style="display: inline-block;" action="{{ route('backend.image.destroy', $image->id) }}" method="post" accept-charset="utf-8">
+                                                                @csrf
+                                                                {{method_field('delete')}}
+                                                                <input type="submit" class="btn btn-danger" value="đồng ý">
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                 </div>
+                                            </div> --}}
+                                @endforeach
+                                <br>
+                                <label for="exampleInputFile">Thêm mới :</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" value="" class="custom-file-input" id="exampleInputFile" name="images[]" multiple>
+                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="images[]" multiple>
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                     </div>
                                     <div class="input-group-append">
@@ -106,6 +139,9 @@
                                     <option value="1" @if($item->status == 1) Selected  @endif>Mở bán</option>
                                     <option value="2" @if($item->status == 2) Selected  @endif>Hết hàng</option>
                                 </select>
+                                @error('content')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <!-- /.card-body -->

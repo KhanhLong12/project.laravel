@@ -25,11 +25,14 @@ class ProductController extends Controller
     {
         $user = Auth::user();
 
-        $products = Product::paginate(5);
+        $products = Product::latest()->paginate(5);
+        // session()->keep(['success']);
+        session()->forget(['success']);
+        // session()->reflash();
         if (Gate::allows('check-role', $user)) {
             return view('backend.product.index')->with(['products' => $products]);
         }else{
-            dd('không thể xem vì không phải admin');
+            return view(abort(404));
         }
         // $products = Product::with('category')->get();
         // foreach ($products as $product) {
@@ -56,10 +59,13 @@ class ProductController extends Controller
         // return Storage::disk('local')->download('file.txt','long.txt');//dowload file
         $categories = Category::get();
         $user = Auth::user();
+        // if (Gate::forUser($user)->allows('update-product', $product)) {
+        //     // User này có thể cập nhật sản phẩm
+        // }
         if (Gate::allows('check-role', $user)) {
             return view('backend.product.create')->with(['categories' => $categories]);
         }else{
-            dd('không thể tạo vì không phải admin');
+            return view(abort(404));
         }
     }
 
@@ -133,14 +139,19 @@ class ProductController extends Controller
             $images = $request->file('images');
             foreach ($images as $key => $image) {
                 $namefile = $image->getClientOriginalName();//lấy tên gốc của ảnh
-                $url = 'storage/' . $namefile;
+                $url = 'storage/products/' . $namefile;
                 Storage::disk('public')->putFileAs('products', $image , $namefile);//chuyeern tuwf thu muc nguon sang thu muc dich
                 $info_images[] = [
                     'url' => $url,
                     'name' => $namefile
                 ];
             }
-                // $image->store('images_11');
+            // if ($url) {
+            //     $request->session()->flash('picture','thêm ảnh thành công');
+            // }else{
+            //     $request->session()->flash('picture','thêm ảnh không thành công');
+            //     // $image->store('images_11');
+            // }
             // foreach ($images as $image) {
             //     $name = $image->getClientOriginalName();
             //     $image->move('images_11', $name);
@@ -158,7 +169,7 @@ class ProductController extends Controller
         $product->content = $request->get('content');
         $product->status = $request->get('status');
         $product->user_id = Auth::user()->id;
-        $product->save();
+        $save = $product->save();
 
         foreach ($info_images as $img) {
             $image = new Image();
@@ -166,6 +177,11 @@ class ProductController extends Controller
             $image->path = $img['url'];
             $image->product_id= $product->id;
             $image->save();
+        }
+        if ($save) {
+            $request->session()->flash('success','Tạo danh mục thành công');
+        }else{
+            $request->session()->flash('error','Tạo danh mục không thành công');
         }
         return redirect()->route('backend.product.index');
     }
@@ -195,7 +211,7 @@ class ProductController extends Controller
         $item = Product::find($id);
         $categories = Category::get();
         $user = Auth::user();
-        
+        $images = $item->images;
         // if ($user->can('update', $item)) {
         //     return view('backend.product.edit')->with([
         //         'categories' => $categories,
@@ -213,10 +229,11 @@ class ProductController extends Controller
             // dd('có quyền');
             return view('backend.product.edit')->with([
             'categories' => $categories,
-            'item' => $item
+            'item' => $item,
+            'images' => $images
         ]);
         }else{
-            dd('Bạn không phải là người tạo sản phẩm này');
+            return view(abort(404));
         }
         
     }
@@ -228,8 +245,27 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProductRequest $request, $id)
+    public function update(Request $request, $id)
     {
+        // dd($request);
+        $info_images = [];
+        if ($request->hasFile('images')) {
+
+            $images = $request->file('images');
+            foreach ($images as $key => $image) {
+                $namefile = $image->getClientOriginalName();//lấy tên gốc của ảnh
+                $url = 'storage/products/' . $namefile;
+                Storage::disk('public')->putFileAs('products', $image , $namefile);//chuyeern tuwf thu muc nguon sang thu muc dich
+                $info_images[] = [
+                    'url' => $url,
+                    'name' => $namefile
+                ];
+            }
+
+        }
+        else{
+            echo "không";
+        }
         $product = Product::find($id);
         $product->name = $request->get('name');
         $product->slug = \Illuminate\Support\Str::slug($request->get('name'));
@@ -239,7 +275,20 @@ class ProductController extends Controller
         $product->content = $request->get('content');
         $product->status = $request->get('status');
         $product->user_id = Auth::user()->id;
-        $product->save();
+        $save = $product->save();
+        foreach ($info_images as $img) {
+            $image = new Image();
+            $image->name = $img['name'];
+            $image->path = $img['url'];
+            $image->product_id= $product->id;
+            $image->save();
+        }
+        // dd($save);
+        if ($save) {
+            $request->session()->flash('success1','Cập nhật category thành công');
+        }else{
+            $request->session()->flash('error1','Cập nhật category không thành công');
+        }
         return redirect()->route('backend.product.index');
     }
 

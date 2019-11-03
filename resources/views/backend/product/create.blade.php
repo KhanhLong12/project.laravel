@@ -4,6 +4,11 @@
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Tạo sản phẩm</h1>
             </div><!-- /.col -->
+            @if(session()->has('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session()->get('error') }}
+                    </div> 
+                @endif
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -83,7 +88,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Mô tả sản phẩm</label>
                                 <textarea class="textarea" name="content" placeholder="Place some text here"
-                                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ old('content') }}</textarea>
+                                          style="width: 100%; height: 500px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ old('content') }}</textarea>
                                 @error('content')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror

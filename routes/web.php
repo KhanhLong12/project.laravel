@@ -26,6 +26,8 @@ Route::prefix('admin')->namespace('Backend')->middleware('auth')->group(function
         Route::get('/', 'UserController@index')->name('backend.user.index');
         Route::get('/create', 'UserController@create')->name('backend.user.create');
         Route::post('/store', 'UserController@store')->name('backend.user.store');
+        Route::get('/edit/{id}','UserController@edit')->name('backend.user.edit');
+        Route::put('/update/{id}','UserController@update')->name('backend.user.update');
         Route::get('/{user_id}','UserController@show')->name('backend.user.show');
     });
     Route::prefix('categories')->group(function(){
@@ -36,6 +38,9 @@ Route::prefix('admin')->namespace('Backend')->middleware('auth')->group(function
         Route::put('/update/{id}','CategoryController@update')->name('backend.category.update');
         Route::delete('/destroy/{id}','CategoryController@destroy')->name('backend.category.destroy');
         Route::get('/{id}','CategoryController@show')->name('backend.category.show');
+    });
+    Route::prefix('images')->group(function(){
+      Route::delete('/destroy/{id}','ImageController@destroy')->name('backend.image.destroy');
     });
 });
 Route::prefix('user')->namespace('Fontend')->group(function(){
@@ -54,3 +59,10 @@ Route::prefix('user')->namespace('Fontend')->group(function(){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/cookie/set','CookieController@set')->name('cookie.set');
+Route::get('/cookie/get','CookieController@get')->name('cookie.get');//luwu treen trinh duyet
+
+Route::get('/home/set','SessionController@set')->name('home.set');//luu tren serve
+Route::get('/home/get','SessionController@get')->name('home.get');
+Route::get('/home/get2','SessionController@get2')->name('home.get2');

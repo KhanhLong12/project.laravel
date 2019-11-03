@@ -3,6 +3,16 @@
 		<div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Danh sách người dùng</h1>
+                @if(session()->has('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session()->get('success') }}
+                    </div> 
+                @endif
+                @if(session()->has('success1'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session()->get('success1') }}
+                    </div> 
+                @endif
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -40,6 +50,7 @@
                                 <th>Email</th>
                                 <th>Thời gian</th>
                                 <th>Status</th>
+                                <th>action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -50,6 +61,7 @@
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->created_at }}</td>
                                         <td><span class="tag tag-success">Approved</span></td>
+                                        <td><a href="{{ route('backend.user.edit', $user->id) }}"><i class="fas fa-edit"></i></a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
