@@ -50,9 +50,9 @@ class CategoryController extends Controller
         $category->description = $request->get('description');
         $save = $category->save();
         if ($save) {
-            $request->session()->flash('success','Tạo sản phẩm thành công');
+            $request->session()->flash('success','Tạo danh mục thành công');
         }else{
-            $request->session()->flash('error','Tạo sản phẩm không thành công');
+            $request->session()->flash('error','Tạo danh mục không thành công');
         }
         return redirect()->route('backend.category.index');
     }
@@ -104,9 +104,9 @@ class CategoryController extends Controller
         $category->description = $request->get('description');
         $save = $category->save();
         if ($save) {
-            $request->session()->flash('success1','Cập nhật sản phẩm thành công');
+            $request->session()->flash('success1','Cập nhật category thành công');
         }else{
-            $request->session()->flash('error1','Cập nhật sản phẩm không thành công');
+            $request->session()->flash('error1','Cập nhật category không thành công');
         }
         return redirect()->route('backend.category.index');
     }

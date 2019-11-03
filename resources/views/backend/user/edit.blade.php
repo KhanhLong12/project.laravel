@@ -41,20 +41,19 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            {{-- <div class="form-group">
+                            <div class="form-group">
                                 <label>Quyền</label>
                                 <select name="role" class="form-control select2" style="width: 100%;">
                                     <option>--Chọn quyền---</option>
-                                    @foreach($users as $user)
-                                        <option value="{{ $user->role }}" @if($user->role == $item->role) selected @endif > @if($item->role == 0) admin @endif </option>
-                                    @endforeach
+                                    <option value="1" @if($item->role == 1) selected @endif>Admin</option>
+                                    <option value="0" @if($item->role == 0) selected @endif>User</option>
                                 </select>
-                            </div> --}}
+                            </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <a href="{{ route('backend.user.index') }}" class="btn btn-default">Huỷ bỏ</a>
-                            <button type="submit" class="btn btn-sucess">Tạo mới</button>
+                            <button type="submit" class="btn btn-sucess">Lưu</button>
                         </div>
                     </form>
                 </div>

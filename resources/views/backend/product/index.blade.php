@@ -8,11 +8,6 @@
                         {{ session()->get('success') }}
                     </div> 
                 @endif
-                 {{-- @if(session()->has('picture'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session()->get('picture') }}
-                    </div> 
-                @endif --}}
                 @if(session()->has('success1'))
                     <div class="alert alert-success" role="alert">
                         {{ session()->get('success1') }}

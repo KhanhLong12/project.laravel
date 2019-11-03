@@ -101,6 +101,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->name = $request->get('username');
         $user->phone = $request->get('phone');
+        $user->role = $request->get('role');
         $save = $user->save();
         if ($save) {
             $request->session()->flash('success1','Cập nhật thông tin thành công');
