@@ -4,6 +4,16 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">Dashboard</h1>
+                        @if(session()->has('success3'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session()->get('success3') }}
+                            </div> 
+                        @endif
+                         @if(session()->has('success5'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session()->get('success5') }}
+                            </div> 
+                        @endif
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -21,9 +31,9 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>150</h3>
+                                <h3>{{ $demcategories }}</h3>
 
-                                <p>Đơn hàng</p>
+                                <p>Danh mục</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
@@ -36,7 +46,7 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>5300</h3>
+                                <h3>{{ $demproducts }}</h3>
 
                                 <p>Sản phẩm</p>
                             </div>
@@ -51,9 +61,9 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>44</h3>
+                                <h3>{{ $demusers }}</h3>
 
-                                <p>Người dùng</p>
+                                <p>Người đăng ký</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
@@ -100,43 +110,43 @@
                             <div class="card-body table-responsive p-0">
                                 <table class="table table-hover">
                                     <thead>
+                                        @php
+                                            $stt = 1;
+                                        @endphp
                                     <tr>
                                         <th>ID</th>
                                         <th>Tên sản phẩm</th>
                                         <th>Thời gian</th>
-                                        <th>Status</th>
-                                        <th>Mô tả</th>
+                                        <th>hình ảnh</th>
+                                        <th>Trang thái</th>
+                                        <th>hành động</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>183</td>
-                                        <td>John Doe</td>
-                                        <td>11-7-2014</td>
-                                        <td><span class="tag tag-success">Approved</span></td>
-                                        <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                    </tr>
-                                    <tr>
-                                        <td>219</td>
-                                        <td>Alexander Pierce</td>
-                                        <td>11-7-2014</td>
-                                        <td><span class="tag tag-warning">Pending</span></td>
-                                        <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                    </tr>
-                                    <tr>
-                                        <td>657</td>
-                                        <td>Bob Doe</td>
-                                        <td>11-7-2014</td>
-                                        <td><span class="tag tag-primary">Approved</span></td>
-                                        <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                    </tr>
-                                    <tr>
-                                        <td>175</td>
-                                        <td>Mike Doe</td>
-                                        <td>11-7-2014</td>
-                                        <td><span class="tag tag-danger">Denied</span></td>
-                                        <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                    </tr>
+                                    @foreach($products as $product)
+                                        <tr>
+                                            <td>{{ $stt++ }}</td>
+                                            <td><a style="color: #007bff" href="{{ route('fontend.product.product', $product->slug) }}">{{ $product->name }}</a></td>
+                                            <td>{{ $product->created_at }}</td>
+                                            <td>
+                                                @if( isset($product->images[0]->path) )
+                                                     <img height="100px" width="100px" src="/{{ $product->images[0]->path }}">
+                                                     <br>
+                                                    <a href="{{ route('backend.product.images',$product->id) }}">Xem thêm</a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($product->status == 0)
+                                                Đang nhập
+                                                @elseif($product->status == 1)
+                                                Mở bán
+                                                @elseif($product->status == 2)
+                                                hết hàng
+                                                @endif
+                                            </td>
+                                            <td><a href="{{ route('backend.product.show', $product->id)}}" class="btn btn-info">Xem chi tiết</a></td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

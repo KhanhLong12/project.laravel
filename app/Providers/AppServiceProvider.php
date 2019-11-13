@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use App\Models\Category;
+use View;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $categories1 = Category::get();
+        // dd($categories1);
+        $categories = Category::WHERE('parent_id', 0)->get();
+        View::share([
+            'categories' => $categories,
+            'categories1' => $categories1,
+        ]);
     }
 }

@@ -100,7 +100,9 @@
 							@foreach($products6 as $product6)
 								<div class="product_item">
 									<div class="product_border"></div>
-									<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/fontend/images/featured_2.png" alt=""></div>
+									@if( count($product6->images))
+										<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/{{$product6->images[0]->path}}" height="150px" width="185px" alt=""></div>
+									@endif
 									<div class="product_content">
 										<div class="product_price">${{ $product6->origin_price }}</div>
 										<div class="product_name"><div><a href="#" tabindex="0">{{ $product6->name }}</a></div></div>

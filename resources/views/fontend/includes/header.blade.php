@@ -31,8 +31,33 @@
 							</div>
 							<div class="top_bar_user">
 								<div class="user_icon"><img src="/fontend/images/user.svg" alt=""></div>
-								<div><a href="#">Register</a></div>
-								<div><a href="#">Sign in</a></div>
+								<div><a href="#">
+									@if( Illuminate\Support\Facades\Auth::user()->role)
+										<a href="{{ route('backend.dashboard') }}">Quản lý tài khoản</a>
+									@else
+										Register
+									@endif
+								</a></div>
+								<div>
+									<a href="#">
+										@if( Illuminate\Support\Facades\Auth::user()->name)
+										 xin chào {{Illuminate\Support\Facades\Auth::user()->name}}
+										@else
+											Sign in
+										@endif
+									</a>
+								</div>
+								<div class="top_bar_user">
+				                    <a href="{{ route('logout') }}"
+				                        onclick="event.preventDefault();
+				                            document.getElementById('logout-form').submit();">
+				                        {{ __('Logout') }}
+				                    </a>
+
+				                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+				                        @csrf
+				                    </form>
+				                </div>
 							</div>
 						</div>
 					</div>
@@ -66,7 +91,7 @@
 												<i class="fas fa-chevron-down"></i>
 												<ul class="custom_list clc">
 													@foreach($categories as $category)
-														<li><a class="clc" href="#">{{ $category->name }}</a></li>
+															<li><a class="clc" href="{{ route('fontend.product.shop') }}">{{ $category->name }}</a></li>
 													@endforeach
 												</ul>
 											</div>
@@ -94,11 +119,11 @@
 								<div class="cart_container d-flex flex-row align-items-center justify-content-end">
 									<div class="cart_icon">
 										<img src="/fontend/images/cart.png" alt="">
-										<div class="cart_count"><span>10</span></div>
+										<div class="cart_count"><span>{{ Gloudemans\Shoppingcart\Facades\Cart::count() }}</span></div>
 									</div>
 									<div class="cart_content">
-										<div class="cart_text"><a href="#">Cart</a></div>
-										<div class="cart_price">$85</div>
+										<div class="cart_text"><a href="{{ route('fontend.indexcart') }}">Cart</a></div>
+										<div class="cart_price">{{ Cart::total() }} VNĐ</div>
 									</div>
 								</div>
 							</div>
@@ -140,45 +165,18 @@
 									<li class="hassubs">
 										<a href="#">Super Deals<i class="fas fa-chevron-down"></i></a>
 										<ul>
+											@foreach($categories as $category)
 											<li>
-												<a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
+												<a href="#">{{ $category->name }}<i class="fas fa-chevron-down"></i></a>
 												<ul>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+													@foreach($categories1 as $category1)
+														@if($category->id == $category1->parent_id)
+															<li><a href="#">{{ $category1->name }}<i class="fas fa-chevron-down"></i></a></li>
+														@endif
+													@endforeach
 												</ul>
 											</li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-										</ul>
-									</li>
-									<li class="hassubs">
-										<a href="#">Featured Brands<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li>
-												<a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
-												<ul>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-													<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-												</ul>
-											</li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-										</ul>
-									</li>
-									<li class="hassubs">
-										<a href="#">Pages<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li><a href="shop.html">Shop<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="product.html">Product<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="blog_single.html">Blog Post<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="regular.html">Regular Post<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="cart.html">Cart<i class="fas fa-chevron-down"></i></a></li>
-											<li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
+											@endforeach
 										</ul>
 									</li>
 									<li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>

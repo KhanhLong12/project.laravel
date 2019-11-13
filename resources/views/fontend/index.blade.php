@@ -104,15 +104,19 @@
 								@foreach($products3 as $product3)
 									<div class="owl-item deals_item">
 										<a href="{{ route('fontend.product.product', $product3->slug) }}">
-											<div class="deals_image"><img src="/fontend/images/deals.png" alt=""></div>
+												@if(count($product3->images) > 0)
+		                                            	<div class="deals_image"><img height="300px" width="185px" src="/{{$product3->images[0]->path}}" alt=""></div>
+		                                            @else
+		                                            	<div><img height="300px" width="185px" src="/default.JPG" alt=""></div>
+		                                            @endif
 											<div class="deals_content">
 												<div class="deals_info_line d-flex flex-row justify-content-start">
-													<div class="deals_item_category"><a href="#">{{ $product3->name }}</a></div>
-													<div class="deals_item_price_a ml-auto">${{ $product3->origin_price }}</div>
+													<div class="deals_item_category"><a href="#">{{ \Illuminate\Support\Str::limit($product3->name,15) }}</a></div>
+													<div class="deals_item_price_a ml-auto">{{ number_format($product3->origin_price) }} VNĐ</div>
 												</div>
 												<div class="deals_info_line d-flex flex-row justify-content-start">
 													<div class="deals_item_name">Beoplay H7</div>
-													<div class="deals_item_price ml-auto">${{ $product3->sale_price }}</div>
+													<div class="deals_item_price ml-auto">{{ number_format($product3->sale_price) }} VNĐ</div>
 												</div>
 												<div class="available">
 													<div class="available_line d-flex flex-row justify-content-start">
@@ -179,17 +183,22 @@
 											<div class="border_active"></div>
 											<a href="{{ route('fontend.product.product', $product->slug) }}">
 												<div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
-													<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/fontend/images/featured_1.png" alt=""></div>
+													@if(count($product->images) > 0)
+		                                            	<div class="product_image d-flex flex-column align-items-center justify-content-center"><img height="150px" width="185px" src="/{{$product->images[0]->path}}" alt=""></div>
+		                                            @else
+		                                            	<div class="product_image d-flex flex-column align-items-center justify-content-center"><img height="150px" width="185px" src="/default.JPG" alt=""></div>
+		                                            @endif
 													<div class="product_content">
-														<div class="product_price discount">${{ $product->origin_price }}</div>
-														<div class="product_name"><div><a href="{{ route('fontend.product.product', $product->slug) }}">{{ $product->name }}</a></div></div>
+														<div class="product_price discount">{{ number_format($product->origin_price) }} VNĐ</div>
+														<div class="product_name"><div><a href="{{ route('fontend.product.product', $product->slug) }}">
+															{{\Illuminate\Support\Str::limit($product->name,15)}}</a></div></div>
 														<div class="product_extras">
 															<div class="product_color">
 																<input type="radio" checked name="product_color" style="background:#b19c83">
 																<input type="radio" name="product_color" style="background:#000000">
 																<input type="radio" name="product_color" style="background:#999999">
 															</div>
-															<button class="product_cart_button">Add to Cart</button>
+															<button class="product_cart_button"><a style="color: white;" href="{{ route('fontend.cartadd', $product->id) }}">Add to Cart</a></button>
 														</div>
 													</div>
 													<div class="product_fav"><i class="fas fa-heart"></i></div>
@@ -216,9 +225,13 @@
 											<a href="{{ route('fontend.product.product', $product4->slug) }}">
 												<div class="border_active"></div>
 												<div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
-													<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/fontend/images/featured_1.png" alt=""></div>
+													@if(count($product4->images) > 0)
+		                                            	<div class="product_image d-flex flex-column align-items-center justify-content-center"><img height="150px" width="185px" src="/{{$product4->images[0]->path}}" alt=""></div>
+		                                            @else
+		                                            	<div class="product_image d-flex flex-column align-items-center justify-content-center"><img height="150px" width="185px" src="/default.JPG" alt=""></div>
+		                                            @endif
 													<div class="product_content">
-														<div class="product_price discount">${{ $product4->sale_price }}<span>${{ $product4->origin_price }}</span></div>
+														<div class="product_price discount">{{ number_format($product4->sale_price) }} VNĐ<span>{{ number_format($product4->origin_price) }} VNĐ</span></div>
 														<div class="product_name"><div><a href="product.html">{{ $product4->name }}</a></div></div>
 														<div class="product_extras">
 															<div class="product_color">
@@ -226,7 +239,7 @@
 																<input type="radio" name="product_color" style="background:#000000">
 																<input type="radio" name="product_color" style="background:#999999">
 															</div>
-															<button class="product_cart_button">Add to Cart</button>
+															<button class="product_cart_button"><a style="color: white;" href="{{ route('fontend.cartadd', $product4->id) }}">Add to Cart</a></button>
 														</div>
 													</div>
 													<div class="product_fav"><i class="fas fa-heart"></i></div>
@@ -254,17 +267,24 @@
 											<a href="{{ route('fontend.product.product', $product5->slug) }}">
 												<div class="border_active"></div>
 												<div class="product_item discount d-flex flex-column align-items-center justify-content-center text-center">
-													<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/fontend/images/featured_1.png" alt=""></div>
+													@if(count($product5->images) > 0)
+		                                            	<div class="product_image d-flex flex-column align-items-center justify-content-center"><img height="150px" width="185px" src="/{{$product5->images[0]->path}}" alt=""></div>
+		                                            @else
+		                                            	<div class="product_image d-flex flex-column align-items-center justify-content-center"><img height="150px" width="185px" src="/default.JPG" alt=""></div>
+		                                            @endif
 													<div class="product_content">
-														<div class="product_price discount">${{ $product5->sale_price }}</div>
-														<div class="product_name"><div><a href="product.html">{{ $product5->name }}</a></div></div>
+														<div class="product_price discount">{{ number_format($product5->sale_price) }}</div>
+														<div class="product_name"><div><a href="product.html">
+															
+															{{\Illuminate\Support\Str::limit($product5->name,15)}}
+														</a></div></div>
 														<div class="product_extras">
 															<div class="product_color">
 																<input type="radio" checked name="product_color" style="background:#b19c83">
 																<input type="radio" name="product_color" style="background:#000000">
 																<input type="radio" name="product_color" style="background:#999999">
 															</div>
-															<button class="product_cart_button">Add to Cart</button>
+															<button class="product_cart_button"><a style="color: white;" href="{{ route('fontend.cartadd', $product5->id) }}">Add to Cart</a></button>
 														</div>
 													</div>
 													<div class="product_fav"><i class="fas fa-heart"></i></div>
@@ -315,7 +335,7 @@
 							@foreach($categories as $category)
 								<div class="owl-item">
 									<div class="popular_category d-flex flex-column align-items-center justify-content-center">
-										<div class="popular_category_image"><img src="/fontend/images/popular_1.png" alt=""></div>
+										<div class="popular_category_image"><img src="/{{ $category->thumbnail }}" alt=""></div>
 										<div class="popular_category_text">{{ $category->name }}</div>
 									</div>
 								</div>
@@ -445,17 +465,21 @@
 												<a href="{{ route('fontend.product.product', $product1->slug) }}">
 													<div class="border_active"></div>
 													<div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-														<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/fontend/images/new_1.jpg" alt=""></div>
+														@if(count($product1->images) > 0)
+			                                            	<div class="product_image d-flex flex-column align-items-center justify-content-center"><img height="150px" width="185px" src="/{{$product1->images[0]->path}}" alt=""></div>
+			                                            @else
+			                                            	<div class="product_image d-flex flex-column align-items-center justify-content-center"><img height="150px" width="185px" src="/default.JPG" alt=""></div>
+			                                            @endif
 														<div class="product_content">
-															<div class="product_price">{{ $product1->origin_price }}</div>
-															<div class="product_name"><div><a href="product.html">{{ $product1->name }}</a></div></div>
+															<div class="product_price">{{ number_format($product1->origin_price) }} VNĐ</div>
+															<div class="product_name"><div><a href="product.html">{{\Illuminate\Support\Str::limit($product1->name,15) }}</a></div></div>
 															<div class="product_extras">
 																<div class="product_color">
 																	<input type="radio" checked name="product_color" style="background:#b19c83">
 																	<input type="radio" name="product_color" style="background:#000000">
 																	<input type="radio" name="product_color" style="background:#999999">
 																</div>
-																<button class="product_cart_button">Add to Cart</button>
+																<button class="product_cart_button"><a style="color: white;" href="{{ route('fontend.cartadd', $product1->id) }}">Add to Cart</a></button>
 															</div>
 														</div>
 														<div class="product_fav"><i class="fas fa-heart"></i></div>
@@ -1344,12 +1368,16 @@
 									<div class="bestsellers_item discount">
 										<a href="{{ route('fontend.product.product', $product2->slug) }}">
 											<div class="bestsellers_item_container d-flex flex-row align-items-center justify-content-start">
-												<div class="bestsellers_image"><img src="/fontend/images/best_1.png" alt=""></div>
+													@if(count($product2->images) > 0)
+		                                            	<div class="bestsellers_image"><img height="150px" width="185px" src="/{{$product2->images[0]->path}}" alt=""></div>
+		                                            @else
+		                                            	<div><img height="150px" width="185px" src="/default.JPG" alt=""></div>
+		                                            @endif
 												<div class="bestsellers_content">
-													<div class="bestsellers_category"><a href="#">{{ $product2->name }}</a></div>
+													<div class="bestsellers_category">{{\Illuminate\Support\Str::limit($product2->name,15) }}</div>
 													<div class="bestsellers_name"><a href="product.html">Xiaomi Redmi Note 4</a></div>
 													<div class="rating_r rating_r_4 bestsellers_rating"><i></i><i></i><i></i><i></i><i></i></div>
-													<div class="bestsellers_price discount">${{ $product2->sale_price }}<span>${{ $product2->origin_price }}</span></div>
+													<div class="bestsellers_price discount">{{ number_format($product2->sale_price) }} VNĐ <span>{{ number_format($product2->origin_price) }} VNĐ </span></div>
 												</div>
 											</div>
 										</a>

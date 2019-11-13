@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Image;
+use Auth;
 
 class ImageController extends Controller
 {
@@ -47,7 +48,7 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        //
+        // $item
     }
 
     /**
@@ -79,9 +80,20 @@ class ImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request , $id , $product_id)
     {
-        Image::destroy($id);
-        return redirect()->route('backend.product.edit');
+        $user = Auth::user();
+        if ($user->can('delete',Image::find($id))) {
+            Image::destroy($id);
+            if (Image::destroy($id) == 0) {
+                $request->session()->flash('success2','Xóa hình ảnh sản phẩm thành công');
+            }else{
+                $request->session()->flash('error','Xóa hình ảnh sản phẩm Không thành công');
+            }
+            return redirect()->route('backend.product.images', $product_id);
+        }
+        else{
+            return redirect()->route('backend.error',$user);
+        }
     }
 }

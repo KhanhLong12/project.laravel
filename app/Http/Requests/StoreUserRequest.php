@@ -24,8 +24,10 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-             'email'        => 'required|e-mail',
+             'email'        => 'required|email',
              'password'     => 'required|min:8',
+             'role'       => 'in:0,1,2',
+             'sex'       => 'in:0,1,2',
              'username'     => 'required|min:5|max:50',
              'phone'        => 'numeric',
         ];
@@ -35,6 +37,7 @@ class StoreUserRequest extends FormRequest
         return [
             'required' => ':attribute Không được để trống',
             'numeric' => ':attribute phải là kiểu số',
+            'in' => 'chọn :attribute',
             'min' => ':attribute không được nhỏ hơn :min',
             'max' => ':attribute Không được lớn hơn :max',
         ];
@@ -50,6 +53,8 @@ class StoreUserRequest extends FormRequest
         return [
             'email' => 'Email',
             'username' => 'Tên',
+            'role' => 'quyền',
+            'sex' => 'Giới tính',
             'password' => 'Mật khẩu',
             'phone' => 'Số điện thoại',
         ];

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
-// use App\Models\category;
+
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -24,16 +24,23 @@ class ProductController extends Controller
     public function index()
     {
         $user = Auth::user();
-
-        $products = Product::latest()->paginate(5);
+        // dd($user);
+        // dd($user);
+        if($user->role == 1 || $user->role == 2) {
+            $products = Product::OrderBY('created_at','DESC')->paginate(5);
+        }else{
+            $products = Product::OrderBY('created_at','DESC')->Where('user_id', $user->id)->paginate(5);//lấy sản phẩm do chính user đó tạo
+        }
         // session()->keep(['success']);
         session()->forget(['success']);
         // session()->reflash();
-        if (Gate::allows('check-role', $user)) {
-            return view('backend.product.index')->with(['products' => $products]);
-        }else{
-            return view(abort(404));
-        }
+        // if ($user->can('view', $products)) {
+            return view('backend.product.index')->with([
+                'products'    => $products
+            ]);
+        // }else{
+        //     return view(abort(404));
+        // }
         // $products = Product::with('category')->get();
         // foreach ($products as $product) {
         //     echo $product->category->name;
@@ -62,10 +69,14 @@ class ProductController extends Controller
         // if (Gate::forUser($user)->allows('update-product', $product)) {
         //     // User này có thể cập nhật sản phẩm
         // }
-        if (Gate::allows('check-role', $user)) {
+        if ($user->can('create', Product::class)) {
             return view('backend.product.create')->with(['categories' => $categories]);
-        }else{
-            return view(abort(404));
+        }
+        // if (Gate::allows('check-role', $user)) {
+        //     return view('backend.product.create')->with(['categories' => $categories]);
+        // }
+        else{
+            return redirect()->route('backend.error',$user);
         }
     }
 
@@ -77,61 +88,6 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        // if ($request->hasFile('images')) {
-        //     $images = $request->file('images');
-        //     // foreach ($images as $image) {
-        //     //     $image->store('images_11');
-        //     foreach ($images as $image) {
-        //         $name = $image->getClientOriginalName();
-        //         $image->move('images_11', $name);
-        //     }
-        // }else{
-        //     dd(5);
-        // }
-        // dd(4);
-        // if ($request->hasFile('image')) {
-        //     // $file = $request->file('image');
-        //     // $path = $file->store('images_5');
-        //     $file = $request->file('image');
-        //     $name = $file->getClientOriginalName();
-        //     $file->move('images_10', $name);
-        //     //path = url/images_10/.$name
-        // }else{
-        //     echo "không";
-        // }
-        // dd(1);
-        // $validatedData = $request->validate([
-        //     'name'         => 'required|min:10|max:255',
-        //     'content'      => 'required|min:10|max:500',
-        //     'status'       => 'required',
-        //     'origin_price' => 'required|numeric',
-        //     'sale_price'   => 'required|numeric',
-        // ]);
-        // $validator = Validator::make($request->all(),
-        //     [
-        //         'name'         => 'required|min:10|max:255',
-        //         'origin_price' => 'required|numeric',
-        //         'sale_price'   => 'required|numeric',
-        //         'content'      => 'required|min:10|max:500'
-        //     ],
-        //     [
-        //         'required' => ':attribute Không được để trống',
-        //         'min' => ':attribute Không được nhỏ hơn :min',
-        //         'max' => ':attribute Không được lớn hơn :max'
-        //     ],
-        //     [
-        //         'name' => 'Tên sản phẩm',
-        //         'origin_price' => 'Giá gốc',
-        //         'sale_price' => 'Giá bán',
-        //         'content' => 'nội dung'
-        //     ]
-        // );
-        // if ($validator->errors()){
-        //     return back()
-        //         ->withErrors($validator)
-        //         ->withInput();
-        // }
-
         //ảnh
         $info_images = [];
         if ($request->hasFile('images')) {
@@ -146,16 +102,6 @@ class ProductController extends Controller
                     'name' => $namefile
                 ];
             }
-            // if ($url) {
-            //     $request->session()->flash('picture','thêm ảnh thành công');
-            // }else{
-            //     $request->session()->flash('picture','thêm ảnh không thành công');
-            //     // $image->store('images_11');
-            // }
-            // foreach ($images as $image) {
-            //     $name = $image->getClientOriginalName();
-            //     $image->move('images_11', $name);
-            // }
         }
         else{
             echo "không";
@@ -179,9 +125,9 @@ class ProductController extends Controller
             $image->save();
         }
         if ($save) {
-            $request->session()->flash('success','Tạo sản phẩm thành công');
+            $request->session()->flash('success4','Tạo sản phẩm thành công');
         }else{
-            $request->session()->flash('error','Tạo sản phẩm không thành công');
+            $request->session()->flash('error4','Tạo sản phẩm không thành công');
         }
         return redirect()->route('backend.product.index');
     }
@@ -192,12 +138,35 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function images($id){
+        $item = Product::find($id);
+        $images = $item->images;
+        return view('backend.product.images')->with([
+            'images' => $images,
+            'item' => $item
+        ]);
+    }
+    // public function error(){
+    //     return view('backend.product.error');
+    // }
     public function show($id)
     {
+        $user = Auth::user();
         $product = Product::find($id);
+        $images = $product->images;
+        // dd($images);
         // dd($product);
         $category = $product->category;
-        dd($category);
+        if ($user->can('view',$product)) {
+        return view('backend.product.detail')->with([
+            'product' => $product,
+            'category' => $category,
+            'images' => $images
+        ]);   
+        }
+        else{
+             return redirect()->route('backend.error',$user);
+        }
     }
 
     /**
@@ -209,31 +178,19 @@ class ProductController extends Controller
     public function edit($id)
     {
         $item = Product::find($id);
-        $categories = Category::get();
         $user = Auth::user();
-        $images = $item->images;
-        // if ($user->can('update', $item)) {
-        //     return view('backend.product.edit')->with([
-        //         'categories' => $categories,
-        //         'item' => $item
-        //     ]);
-        // }else{
-        //     dd('aaaabc');
-        // }
         
-        // return view('backend.product.edit')->with([
-        //     'categories' => $categories,
-        //     'item' => $item
-        // ]);
-        if (Gate::allows('update-product', $item)){//nếu cho up date thì return về ..
-            // dd('có quyền');
+        if ($user->can('update', $item)) {
+            $categories = Category::get();
+            $images = $item->images;
             return view('backend.product.edit')->with([
             'categories' => $categories,
             'item' => $item,
             'images' => $images
         ]);
-        }else{
-            return view(abort(404));
+        }
+        else{
+             return redirect()->route('backend.error',$user);
         }
         
     }
@@ -274,8 +231,9 @@ class ProductController extends Controller
         $product->origin_price = $request->get('origin_price');
         $product->content = $request->get('content');
         $product->status = $request->get('status');
-        $product->user_id = Auth::user()->id;
+        // $product->user_id = Auth::user()->id;
         $save = $product->save();
+        
         foreach ($info_images as $img) {
             $image = new Image();
             $image->name = $img['name'];
@@ -298,9 +256,19 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        Product::destroy($id);
-        return redirect()->route('backend.product.index');
+        $user = Auth::user();
+        if ($user->can('delete', Product::find($id))) {
+            Product::destroy($id);
+        if (Product::destroy($id) == 0) {
+            $request->session()->flash('success5','Xóa sản phẩm thành công');
+        }else{
+            $request->session()->flash('error5','Xóa sản phẩm không thành công');
+        }
+            return redirect()->route('backend.product.index');
+        }else{
+            return redirect()->route('backend.error',$user);
+        }
     }
 }

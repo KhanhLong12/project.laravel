@@ -28,9 +28,9 @@ class ProductPolicy
      * @param  \App\ModelsProduct  $modelsProduct
      * @return mixed
      */
-    public function view(User $user, ModelsProduct $modelsProduct)
+    public function view(User $user, Product $product)
     {
-        //
+        return $user->id === $product->user_id || $user->role === 1 || $user->role === 2;
     }
 
     /**
@@ -41,7 +41,7 @@ class ProductPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role === 1;
     }
 
     /**
@@ -53,7 +53,7 @@ class ProductPolicy
      */
     public function update(User $user, Product $product)
     {
-        return $user->id === $product->user_id;
+        return $user->id === $product->user_id || $user->role === 1;
     }
 
     /**
@@ -63,9 +63,9 @@ class ProductPolicy
      * @param  \App\ModelsProduct  $modelsProduct
      * @return mixed
      */
-    public function delete(User $user, ModelsProduct $modelsProduct)
+    public function delete(User $user, Product $product)
     {
-        //
+        return $user->id === $product->user_id || $user->role === 1;
     }
 
     /**
@@ -89,6 +89,6 @@ class ProductPolicy
      */
     public function forceDelete(User $user, ModelsProduct $modelsProduct)
     {
-        //
+        
     }
 }

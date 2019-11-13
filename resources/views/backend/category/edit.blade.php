@@ -28,11 +28,11 @@
                         <input name="_method" type="hidden" value="PUT">
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Name</label>
-                                <input value="{{ $item->name }} {{old('name')}}" name="name" type="text" class="form-control" id="" placeholder="Tên category">
+                                <label>Name: <span style="color: #dc3545;">*</span></label>
                                 @error('name')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <a style="color: red;"> ! {{ $message }}</a>
                                 @enderror
+                                <input value="{{ $item->name }}" name="name" type="text" class="form-control" id="" placeholder="Tên category">
                             </div>
                             <div class="form-group">
                                 <label>parent category</label>
@@ -43,31 +43,35 @@
                                     @endforeach
                                 </select>
                             </div>
-                            {{-- <div class="form-group">
-                                <label for="exampleInputFile">Thumbnail</label>
+                            <div class="form-group">
+                                <label for="exampleInputFile">Thumbnail: <span style="color: #dc3545;">*</span></label>
+                                <img style="height: 100px; width: 100px;" src="/{{ $item->thumbnail }}" name="img">
+                                @error('images')
+                                    <a style="color: red;"> ! {{ $message }}</a>
+                                @enderror
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="exampleInputFile">
+                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="images" multiples>
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                     </div>
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="">Upload</span>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input value="{{ $item->description }} {{ old('description') }}" name="description" type="text" class="form-control" id="" placeholder="Mô tả">
+                                <label>Description: <span style="color: #dc3545;">*</span></label>
                                 @error('description')
-                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    <a style="color: red;"> ! {{ $message }}</a>
                                 @enderror
+                                <input value="{{ $item->description }}" name="description" type="text" class="form-control" id="" placeholder="Mô tả">
                             </div>
                         </div>
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-default">Huỷ bỏ</button>
-                            <button type="submit" class="btn btn-sucess">Cập nhập</button>
+                            <a href="{{ route('backend.category.index') }}" class="btn btn-default">Huỷ bỏ</a>
+                            <button type="submit" class="btn btn-success">Cập nhập</button>
                         </div>
                     </form>
                 </div>

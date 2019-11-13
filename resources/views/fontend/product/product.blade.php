@@ -16,15 +16,20 @@
 				<!-- Images -->
 				<div class="col-lg-2 order-lg-1 order-2">
 					<ul class="image_list">
-						<li data-image="/fontend/images/single_4.jpg"><img src="/fontend/images/single_4.jpg" alt=""></li>
-						<li data-image="/fontend/images/single_2.jpg"><img src="/fontend/images/single_2.jpg" alt=""></li>
-						<li data-image="/fontend/images/single_3.jpg"><img src="/fontend/images/single_3.jpg" alt=""></li>
+						@foreach( $images as $image)
+							<li data-image="/{{$image->path}}"><img src="/{{$image->path}}" alt=""></li>
+						@endforeach
 					</ul>
 				</div>
 
 				<!-- Selected Image -->
 				<div class="col-lg-5 order-lg-2 order-1">
-					<div class="image_selected"><img src="/fontend/images/single_4.jpg" alt=""></div>
+					<div class="image_selected">
+						@if(count($product->images) > 0)
+		                	<div class="bestsellers_image"><img height="200px" width="200px" src="/{{$product->images[0]->path}}" alt=""></div>
+		               @else
+		                	<div><img height="150px" width="185px" src="/default.JPG" alt=""></div>
+		               @endif</div>
 				</div>
 
 				<!-- Description -->
@@ -33,7 +38,7 @@
 						<div class="product_category">{{ $product->category->name }}</div>
 						<div class="product_name">{{ $product->name }}</div>
 						<div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>
-						<div class="product_text"><p>{{ $product->content }}</p></div>
+						<div class="product_text"><p>{!! $product->content !!}</p></div>
 						<div class="order_info d-flex flex-row">
 							<form action="#">
 								<div class="clearfix" style="z-index: 1000;">
@@ -65,9 +70,9 @@
 
 								</div>
 
-								<div class="product_price">${{ $product->origin_price }}</div>
+								<div class="product_price">{{ number_format($product->origin_price) }} VNĐ </div>
 								<div class="button_container">
-									<button type="button" class="button cart_button">Add to Cart</button>
+									<a href="{{ route('fontend.cartadd', $product->id) }}" type="button" class="button cart_button">Add to Cart</a>
 									<div class="product_fav"><i class="fas fa-heart"></i></div>
 								</div>
 								

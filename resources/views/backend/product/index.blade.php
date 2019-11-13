@@ -3,14 +3,24 @@
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Danh sách sản phẩm  <a href="{{ route('backend.product.create') }}"><i class="fas fa-plus" style="color: blue;font-size: 20px;"></i></a></h1>
-                @if(session()->has('success'))
+                @if(session()->has('success4'))
                     <div class="alert alert-success" role="alert">
-                        {{ session()->get('success') }}
+                        {{ session()->get('success4') }}
                     </div> 
                 @endif
                 @if(session()->has('success1'))
                     <div class="alert alert-success" role="alert">
                         {{ session()->get('success1') }}
+                    </div> 
+                @endif
+                @if(session()->has('success2'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session()->get('success2') }}
+                    </div> 
+                @endif
+                @if(session()->has('success5'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session()->get('success5') }}
                     </div> 
                 @endif
             </div><!-- /.col -->
@@ -46,26 +56,46 @@
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
                             <thead>
+                                @php
+                                    $stt = 1;
+                                @endphp
                             <tr>
                                 <th>ID</th>
                                 <th>Tên sản phẩm</th>
                                 <th>danh mục</th>
-                                <th>Người tạo</th>
-                                <th>Status</th>
+                                {{-- <th>Người tạo</th> --}}
+                                <th>hình ảnh</th>
+                                <th>Trạng thái</th>
                                 <th>Mô tả</th>
-                                <th>Action</th>
+                                <th>Hành động</th>
                             </tr>
                             </thead>
                             <tbody>
                                 @foreach($products as $product)
                                     <tr>
-                                        <td>{{ $product->id }}</td>
-                                        <td>{{ $product->name }}</td>
+                                        <td>{{ $stt++ }}</td>
+                                        <td><a href="{{ route('fontend.product.product', $product->slug) }}">{{ $product->name }}</a></td>
                                         <td>{{ $product->category->name }}</td>
-                                        <td>{{ $product->user->name }}</td>
-                                        <td>{{ $product->status }}</td>
-                                        <td>{{ $product->content }}</td>
+                                        {{-- <td>{{ $product->user->name }}</td> --}}
                                         <td>
+                                            @if( isset($product->images[0]->path) )
+                                             <img height="100px" width="100px" src="/{{ $product->images[0]->path }}">
+                                             <br>
+                                            <a href="{{ route('backend.product.images',$product->id) }}">Xem thêm</a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($product->status == 0)
+                                            Đang nhập
+                                            @elseif($product->status == 1)
+                                            Mở bán
+                                            @elseif($product->status == 2)
+                                            hết hàng
+                                            @endif
+                                        </td>
+                                        <td>{!! substr(strip_tags($product->content), 0, 60) !!}</td>
+                                        <td>
+                                            <a href="{{ route('backend.product.show', $product->id)}}"><i class="far fa-eye"></i></a>
                                             <a href="{{ route('backend.product.edit', $product->id) }}"><i class="fas fa-edit"></i></a>
                                             <a href="{{ route('backend.product.destroy', $product->id) }}" data-toggle="modal" data-target="#exampleModalCenter-{{$product->id}}"><i class="fas fa-trash-alt"></i></a>
                                             <div class="modal fade" id="exampleModalCenter-{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

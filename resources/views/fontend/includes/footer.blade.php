@@ -28,11 +28,9 @@
 					<div class="footer_column">
 						<div class="footer_title">Tìm nhanh</div>
 						<ul class="footer_list">
-							<li><a href="#">Máy tính và laptop</a></li>
-							<li><a href="#">Máy ảnh</a></li>
-							<li><a href="#">Phần cứng</a></li>
-							<li><a href="#">Điện thoại và máy tính bảng</a></li>
-							<li><a href="#">TV & Âm thanh</a></li>
+							@foreach($categories as $category)
+								<li><a href="#">{{ $category->name }}</a></li>
+							@endforeach
 						</ul>
 					</div>
 				</div>

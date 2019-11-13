@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCategoryRequest;
-
+use Auth;
+use Auth\User;
 class CategoryController extends Controller
 {
     /**
@@ -28,10 +29,17 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
         $categories = Category::get();
-        return view('backend.category.create')->with([
-            'categories' => $categories
-        ]);
+        $user->can('create', Category::class);
+        if ($user->can('create', Category::class)) {
+            return view('backend.category.create')->with([
+                'categories' => $categories
+            ]);
+        }else{
+            // dd($user);
+            return redirect()->route('backend.error',$user);
+        }
     }
 
     /**
@@ -42,12 +50,23 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
+        // dd($request);
+        if ($request->hasFile('images')) {
+            $file = $request->file('images');
+            $name = $file->getClientOriginalName();
+            $thumbnail = $file->move('categories', $name);
+            // dd($thumbnail);
+        }else{
+            echo "không";
+        }
         $category = new Category();
         $category->name = $request->get('name'); 
         $category->slug = \Illuminate\Support\Str::slug($request->get('name'));
         $category->parent_id = $request->get('parent_id');
+        $category->user_id = Auth::user()->id;
         $category->depth = 0;
         $category->description = $request->get('description');
+        $category->thumbnail = $thumbnail;
         $save = $category->save();
         if ($save) {
             $request->session()->flash('success','Tạo danh mục thành công');
@@ -80,12 +99,17 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $item = Category::find($id);
         $categories = Category::get();
-        return view('backend.category.edit')->with([
-            'categories' => $categories,
-            'item' => $item
-        ]);
+        if ($user->can('update', $item)) {
+            return view('backend.category.edit')->with([
+                'categories' => $categories,
+                'item' => $item
+            ]);
+        }else{
+            return redirect()->route('backend.error',$user);
+        }
     }
 
     /**
@@ -95,9 +119,18 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCategoryRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $category = Category::find($id);
+        if ($request->hasFile('images')) {
+            $file = $request->file('images');
+            $name = $file->getClientOriginalName();
+            $thumbnail = $file->move('categories', $name);
+            $category->thumbnail = $thumbnail;
+            // dd($thumbnail);
+        }else{
+            echo "không";
+        }
         $category->name = $request->get('name');
         $category->slug = \Illuminate\Support\Str::slug($request->get('name'));
         $category->parent_id = $request->get('parent_id');
@@ -119,7 +152,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::destroy($id);
-        return redirect()->route('backend.category.index');
+        $user = Auth::user();
+        if ($user->can('delete',Category::find($id))) {
+            Category::destroy($id);
+            return redirect()->route('backend.category.index');   
+        }else{
+            return redirect()->route('backend.error',$user);
+        }
     }
 }

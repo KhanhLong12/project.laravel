@@ -5,7 +5,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">Home</a>
+                <a href="{{ route('fontend.index') }}" class="nav-link">Home</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="#" class="nav-link">Contact</a>
@@ -117,15 +117,15 @@
                 </a>
             </li> --}}
             <li class="nav-item dropdown">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    {{ Auth::user()->name }} <span class="caret"></span>
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre><span class="caret"></span>
                 </a>
-
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('backend.user.editinfo',Illuminate\Support\Facades\Auth::user()->id) }}"><i class="fas fa-address-card"></i> Thông tin cá nhân</a>
+                    <a class="dropdown-item" href="{{ route('backend.user.reset') }}"><i class="fas fa-key"></i> Đổi mật khẩu</a>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
+                        <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
                     </a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

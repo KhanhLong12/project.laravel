@@ -33,27 +33,27 @@
                         {{csrf_field()}}
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Tên sản phẩm</label>
+                                <label for="exampleInputEmail1">Tên sản phẩm :<span style="color: #dc3545;">*</span></label>
+                                @error('name')
+                                    <a style="color: red;"> ! {{ $message }}</a>
+                                @enderror
                                 <input type="text" class="form-control" id="" placeholder="Điền tên sản phẩm " name="name" value="{{ old('name') }}">
                                 {{-- @if($errors->has('name'))
                                     <div class="alert alert-danger">Lỗi</div>
                                     <div class="alert alert-danger">{{ $errors->first() }}</div>
                                 @endif --}}
-                                @error('name')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="form-group">
-                                <label>Danh mục sản phẩm</label>
+                                <label>Danh mục sản phẩm :<span style="color: #dc3545;">*</span></label>
+                                @error('category_id')
+                                    <a style="color: red;"> ! {{ $message }}</a>
+                                @enderror
                                 <select name="category_id" class="form-control select2" style="width: 100%;">
                                     <option>--Chọn danh mục---</option>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('category_id')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
                             </div>
  {{--                            <div class="form-group">
                                 <label>Thương hiệu sản phẩm</label>
@@ -68,33 +68,39 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label>Giá khuyến mại</label>
-                                        <input type="text" class="form-control" placeholder="Điền giá khuyến mại" name="sale_price" value="{{ old('sale_price') }}">
+                                        <label>Giá khuyến mại :<span style="color: #dc3545;">*</span></label>
                                         @error('sale_price')
-                                            <div class="alert alert-danger">{{ $message }}</div>
+                                            <a style="color: red;"> ! {{ $message }}</a>
                                         @enderror
+                                        <input type="text" class="form-control" placeholder="Điền giá khuyến mại" name="sale_price" value="{{ old('sale_price') }}">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label>Giá bán</label>
-                                        <input type="text" class="form-control" placeholder="Giá nhập vào" name="origin_price" value="{{ old('origin_price') }}">
+                                        <label>Giá bán :<span style="color: #dc3545;">*</span> </label>
                                         @error('origin_price')
-                                            <div class="alert alert-danger">{{ $message }}</div>
+                                            <a style="color: red;">{{ $message }}</a>
                                         @enderror
+                                        <input type="text" class="form-control" placeholder="Giá nhập vào" name="origin_price" value="{{ old('origin_price') }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Mô tả sản phẩm</label>
+                                <label for="exampleInputEmail1">Mô tả sản phẩm : <span style="color: #dc3545;">*</span></label>
+                                @error('content')
+                                    <a style="color: red;">{{ $message }}</a>
+                                @enderror
                                 <textarea class="textarea" name="content" placeholder="Place some text here"
                                           style="width: 100%; height: 500px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ old('content') }}</textarea>
-                                @error('content')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputFile">Hình ảnh sản phẩm</label>
+                                <label for="exampleInputFile">Hình ảnh sản phẩm :<span style="color: #dc3545;">*</span></label>
+                                @error('images')
+                                    <a style="color: red;">! {{ $message }}</a>
+                                @enderror
+                                @error('images.*')
+                                    <a style="color: red;">! {{ $message }}</a>
+                                @enderror
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="exampleInputFile" name="images[]" multiple>
@@ -104,12 +110,6 @@
                                         <span class="input-group-text" id="">Upload</span>
                                     </div>
                                 </div>
-                                @error('images')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                                @error('images.*')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
                                {{--  @if ($errors->any())
                                     <div class="alert alert-danger">
                                         <ul>
@@ -121,23 +121,23 @@
                                 @endif --}}
                             </div>
                             <div class="form-group">
-                                <label>Trạng thái sản phẩm</label>
+                                <label>Trạng thái sản phẩm : <span style="color: #dc3545;">*</span></label>
+                                @error('status')
+                                    <a style="color: red;">! {{ $message }}</a>
+                                @enderror
                                 <select name="status" class="form-control select2" style="width: 100%;">
                                     <option>--Chọn trạng thái---</option>
                                     <option value="0">Đang nhập</option>
                                     <option value="1">Mở bán</option>
                                     <option value="2">Hết hàng</option>
                                 </select>
-                                @error('status')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
                             </div>
                         </div>
                         <!-- /.card-body -->
 
                         <div class="card-footer">
                             <a href="{{ route('backend.product.index') }}" class="btn btn-default">Huỷ bỏ</a>
-                            <button type="submit" class="btn btn-sucess">Tạo mới</button>
+                            <button type="submit" class="btn btn-success">Tạo mới</button>
                         </div>
                     </form>
                 </div>

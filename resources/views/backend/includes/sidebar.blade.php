@@ -11,7 +11,7 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="/backend/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    <img src="/{{ Illuminate\Support\Facades\Auth::user()->avatar }}" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
                     <a href="#" class="d-block">
@@ -57,10 +57,9 @@
                             <li class="nav-item">
                                 <a href="{{ route('backend.product.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Danh sách</p>
+                                    <p>Danh sách sản phẩm</p>
                                 </a>
                             </li>
-
                         </ul>
                     </li>
                     <li class="nav-item has-treeview">
@@ -86,29 +85,31 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-user"></i>
-                            <p>
-                                Quản lý người dùng
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('backend.user.create') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Tạo mới</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('backend.user.index') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Danh sách</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    @if(Illuminate\Support\Facades\Auth::user()->role==1)
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    Quản lý tài khoản
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('backend.user.create') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Tạo mới</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('backend.user.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

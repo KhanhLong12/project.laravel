@@ -25,12 +25,15 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
              'name'        => 'required|min:3|max:255',
-             'description'     => 'required|min:5|max:30',
+             'description'     => 'required|min:5|max:100',
+             'images' => 'required|image|max:2000',
         ];
     }
     public function messages()
     {
         return [
+            'images.*.max' => ':attribute không đưuọc vượt quá 2M',
+            'images.*.image' => ':attribute sai định dạng',
             'required' => ':attribute Không được để trống',
             'min' => ':attribute không được nhỏ hơn :min',
             'max' => ':attribute Không được lớn hơn :max',
@@ -45,6 +48,7 @@ class StoreCategoryRequest extends FormRequest
     public function attributes()
     {
         return [
+            'images' => 'ảnh',
             'name' => 'tên',
             'description' => 'Mô tả',
         ];
