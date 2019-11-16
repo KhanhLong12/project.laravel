@@ -2,7 +2,7 @@
 @section('content-header')
 		<div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Danh sách người dùng</h1>
+                <h1 class="m-0 text-dark">Danh sách người dùng <a href="{{ route('backend.user.create') }}"><i class="fas fa-plus" style="color: blue;font-size: 20px;"></i></a></h1></h1>
                 @if(session()->has('success'))
                     <div class="alert alert-success" role="alert">
                         {{ session()->get('success') }}
@@ -74,7 +74,7 @@
                                                       <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                           <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle" style="display: inline-block;">Bạn có chắc chắn xóa ko?</h5>
+                                                            <h5 class="modal-title" id="exampleModalLongTitle" style="display: inline-block;">Thông báo</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                               <span aria-hidden="true">&times;</span>
                                                             </button>

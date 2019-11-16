@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Category;
 use View;
 class AppServiceProvider extends ServiceProvider
@@ -24,9 +25,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // $cate=Category::get();
+        // Cache::put('cate',$cate,60*60);
+        // $categories = Cache::remember('cate',60, function() {
+        //     return $categories=Category::get();
+        // });
+        // $categories = Category::get();
         $categories1 = Category::get();
         // dd($categories1);
         $categories = Category::WHERE('parent_id', 0)->get();
+        Cache::put('categories', $categories,50*5);
         View::share([
             'categories' => $categories,
             'categories1' => $categories1,

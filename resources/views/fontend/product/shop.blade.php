@@ -31,7 +31,7 @@
 							<div class="sidebar_title">Categories</div>
 							<ul class="sidebar_categories">
 								@foreach($categories as $category)
-									<li><a href="#">{{ $category->name }}</a></li>
+									<li><a href="{{ route('fontend.product.shop', $category->slug) }}">{{ $category->name }}</a></li>
 								@endforeach
 							</ul>
 						</div>
@@ -98,21 +98,23 @@
 							<div class="product_grid_border"></div>
 							<!-- Product Item -->
 							@foreach($products6 as $product6)
-								<div class="product_item">
-									<div class="product_border"></div>
-									@if( count($product6->images))
-										<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/{{$product6->images[0]->path}}" height="150px" width="185px" alt=""></div>
-									@endif
-									<div class="product_content">
-										<div class="product_price">${{ $product6->origin_price }}</div>
-										<div class="product_name"><div><a href="#" tabindex="0">{{ $product6->name }}</a></div></div>
-									</div>
-									<div class="product_fav"><i class="fas fa-heart"></i></div>
-									<ul class="product_marks">
-										<li class="product_mark product_discount">-25%</li>
-										<li class="product_mark product_new">new</li>
-									</ul>
-								</div>
+									<a href="{{ route('fontend.product.product', $product6->slug) }}">
+										<div class="product_item">
+											<div class="product_border"></div>
+											@if( count($product6->images))
+												<div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="/{{$product6->images[0]->path}}" height="150px" width="185px" alt=""></div>
+											@endif
+											<div class="product_content">
+												<div class="product_price">{{ number_format($product6->origin_price) }} VNĐ</div>
+												<div class="product_name"><div><a href="{{ route('fontend.product.product', $product6->slug) }}" tabindex="0">{{ $product6->name }}</a></div></div>
+											</div>
+											<div class="product_fav"><i class="fas fa-heart"></i></div>
+											<ul class="product_marks">
+												<li class="product_mark product_discount">-25%</li>
+												<li class="product_mark product_new">new</li>
+											</ul>
+										</div>
+									</a>
 							@endforeach
 							
 						</div>

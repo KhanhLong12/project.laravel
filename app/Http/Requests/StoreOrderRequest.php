@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserRequest extends FormRequest
+class StoreOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,11 @@ class StoreUserRequest extends FormRequest
     {
         return [
              'email'        => 'required|email',
-             'password'     => 'required|min:8',
-             'role'       => 'in:0,1,2',
-             'sex'       => 'in:0,1,2',
-             'username'     => 'required|min:5|max:50',
+             'address'       => 'required|min:5',
+             'city'       => 'required',
+             'name'     => 'required|min:5|max:50',
              'phone'        => 'required|numeric',
-             'images' => 'image|max:2000',
+             'district' => 'required',
         ];
     }
     public function messages()
@@ -38,9 +37,7 @@ class StoreUserRequest extends FormRequest
         return [
             'required' => ':attribute Không được để trống',
             'email' => ':attribute cần nhập đúng định dạng',
-            'images.*.image' => ':attribute sai định dạng',
             'numeric' => ':attribute phải là kiểu số',
-            'in' => 'chọn :attribute',
             'min' => ':attribute không được nhỏ hơn :min',
             'max' => ':attribute Không được lớn hơn :max',
         ];
@@ -55,11 +52,10 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'email' => 'Email',
-            'images' => 'ảnh',
-            'username' => 'Tên',
-            'role' => 'quyền',
-            'sex' => 'Giới tính',
-            'password' => 'Mật khẩu',
+            'city' => 'Tỉnh/Thành Phố',
+            'name' => 'Tên',
+            'address' => 'Địa chỉ nhận hàng',
+            'district' => 'Quận/Huyện',
             'phone' => 'Số điện thoại',
         ];
     }

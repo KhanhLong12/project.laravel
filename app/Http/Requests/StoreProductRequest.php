@@ -31,7 +31,7 @@ class StoreProductRequest extends FormRequest
             'category_id'  => 'integer',
             'status'       => 'in:0,1,2',
             'sale_price'   => 'required|numeric',
-            'images.*'     => 'max:2000|image',
+            'images.*'     => 'max:2000|mimes:jpeg,jpg,png,gif',
             'images'       => 'required',
         ];
     }
@@ -43,7 +43,7 @@ class StoreProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'images.*.image'        => ':attribute sai định dạng',
+            'images.*.mimes'        => ':attribute sai định dạng',
             'images.*.max' => ':attribute kích thước không được vượt quá 2MB',
             'name.max'       => ':attribute không được lớn hơn :max',    
             'content.min'       => ':attribute không được nhỏ hơn :max',    

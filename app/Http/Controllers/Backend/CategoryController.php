@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\StoreCategoryUpdateRequest;
 use Auth;
 use Auth\User;
 class CategoryController extends Controller
@@ -119,7 +120,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreCategoryUpdateRequest $request, $id)
     {
         $category = Category::find($id);
         if ($request->hasFile('images')) {

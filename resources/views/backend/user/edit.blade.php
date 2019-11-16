@@ -35,6 +35,13 @@
                                 <input name="username" type="text" class="form-control" id="" placeholder="Name" value="{{ $item->name }}">
                             </div>
                             <div class="form-group">
+                                <label for="exampleInputEmail1">Email :<span style="color: #dc3545;">*</span></label>
+                                @error('email')
+                                    <a style="color: red;"> ! {{ $message }}</a>
+                                @enderror
+                                <input name="email" type="email" class="form-control" placeholder="Email" value="{{ $item->email }}">
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputEmail1">Số điện thoại :</label>
                                 @error('phone')
                                     <a style="color: red;"> ! {{ $message }}</a>

@@ -18,7 +18,11 @@
 {{--                         @if( Illuminate\Support\Facades\Auth::user()->role == 1 )
                             xin chào Admin
                         @endif --}}
-                        {{ Illuminate\Support\Facades\Auth::user()->name }}
+                        @if(Illuminate\Support\Facades\Auth::user()->userInfo->fullname == null)
+                            {{Illuminate\Support\Facades\Auth::user()->name}}
+                        @else
+                            {{Illuminate\Support\Facades\Auth::user()->userInfo->fullname}}
+                        @endif
                     </a>
                         <a href="#" class="d-block" style="color: blue">{{ Illuminate\Support\Facades\Auth::user()->email }} </a>
                 </div>
@@ -109,6 +113,24 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-file-invoice"></i>
+                            <p>
+                                Quản lý đơn hàng
+                                <i class="fas fa-angle-left right"></i>
+                                <span class="badge badge-info right">6</span>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('backend.bill.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh sách</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     @endif
                 </ul>
             </nav>

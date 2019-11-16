@@ -11,54 +11,84 @@
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
 					<div class="cart_container">
-						<div class="cart_title">Shopping Cart</div>
-							{{-- @if(isset($item)) --}}
-								<div class="cart_items">
-									<ul class="cart_list">
-										@foreach($item as $item1)
-											<li class="cart_item clearfix">
-												@if( count($item1->options) >0)
-													<div class="cart_item_image"><img src="/{{$item1->options->image}}" alt=""></div>
-												@endif
-												<div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-													<div class="cart_item_name cart_info_col">
-														<div class="cart_item_title">name</div>
-														<div class="cart_item_text">{{ $item1->name }}</div>
-													</div>
-													<div class="cart_item_color cart_info_col">
-														<div class="cart_item_title">Color</div>
-														<div class="cart_item_text"><span style="background-color:#999999;"></span>Silver</div>
-													</div>
-													<div class="cart_item_quantity cart_info_col">
-														<div class="cart_item_title">Quantity</div>
-														<div class="cart_item_text">{{ $item1->qty }}</div>
-													</div>
-													<div class="cart_item_price cart_info_col">
-														<div class="cart_item_title">Price</div>
-														<div class="cart_item_text">{{ number_format($item1->price) }} VNĐ</div>
-													</div>
-													<div class="cart_item_total cart_info_col">
-														<div class="cart_item_title">Total</div>
-														<div class="cart_item_text">{{number_format($item1->price * $item1->qty)}} VNĐ</div>
-													</div>
-												</div>
-											</li>
-										@endforeach
-									</ul>
-								</div>
-							{{-- @endif --}}
+						@if(session()->has('success'))
+		                    <div class="alert alert-success" role="alert">
+		                        {{ session()->get('success') }}
+		                    </div> 
+		                @endif
+						<div class="cart_title">Thông tin giỏ hàng</div>
+							@if(Gloudemans\Shoppingcart\Facades\Cart::total() == 0)
+								<h3 style="color: #999999;">Chưa có sản phẩm nào trong giỏ</h3>
+								<a href="{{ route('fontend.index') }}" class="btn btn-outline-warning"">Tiếp tục mua hàng</a>
+							@else
+									<div class="cart_items">
+										<ul class="cart_list">
+											@foreach($item as $item1)
+												<li class="cart_item clearfix">
+														@if( count($item1->options) >0)
+															<div class="cart_item_image"><img src="/{{$item1->options->image}}" alt=""></div>
+														@endif
+														<div class="cart_item_info d-flex flex-md-row flex-column justify-content-between row">
+															<div class="cart_item_name cart_info_col">
+																<div class="cart_item_title">Tên sản phẩm</div>
+																<div class="cart_item_text">{{ $item1->name }}</div>
+															</div>
+															<div class="cart_item_color cart_info_col">
+																<div class="cart_item_title">Màu</div>
+																<div class="cart_item_text"><span style="background-color:#999999;"></span>Silver</div>
+															</div>
+															<div class="cart_item_quantity cart_info_col">
+																<div class="cart_item_title">Số lượng</div>
+																<div class="cart_item_text">{{ $item1->qty }}</div>
+															</div>
+															<div class="cart_item_price cart_info_col">
+																<div class="cart_item_title">Giá</div>
+																<div class="cart_item_text">{{ number_format($item1->price) }} VNĐ</div>
+															</div>
+															<div class="cart_item_total cart_info_col">
+																<div class="cart_item_title">Tổng</div>
+																<div class="cart_item_text">{{number_format($item1->price * $item1->qty)}} VNĐ</div>
+															</div>
+														</div>
+													</li>
+											@endforeach
+										</ul>
+									</div>
 						<!-- Order Total -->
-						<div class="order_total">
-							<div class="order_total_content text-md-right">
-								<div class="order_total_title">Order Total:</div>
-								<div class="order_total_amount">{{ Gloudemans\Shoppingcart\Facades\Cart::total() }} VNĐ</div>
+							<div class="order_total">
+								<div class="order_total_content text-md-right">
+									<div class="order_total_title">Tổng tiền</div>
+									<div class="order_total_amount">{{ Gloudemans\Shoppingcart\Facades\Cart::total() }} VNĐ</div>
+								</div>
 							</div>
-						</div>
-
-						<div class="cart_buttons">
-							<button type="button" class="button cart_button_clear">Add to Cart</button>
-							<button type="button" class="button cart_button_checkout">Add to Cart</button>
-						</div>
+							<div class="cart_buttons">
+								<button style="background: none !important;cursor: pointer;color: red;" class="button btn btn-outline-danger" data-toggle="modal" data-target="#exampleModalCenter-1">Xóa giỏ hàng</button>
+								<div class="modal fade" id="exampleModalCenter-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                      <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                          <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle" style="display: inline-block;">Thông báo</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                              <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                             <h4>Bạn chắc chắn muốn xóa?</h4>
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+																<form style="display: inline-block;" action="{{ route('fontend.deletecart') }}" method="post" accept-charset="utf-8">
+									                                @csrf
+									                                {{method_field('delete')}}
+									                                <button type="submit" class="btn btn-danger">Xóa giỏ hàng</button>
+									                            </form>
+									                        </div>
+                                                    </div>
+                                                 </div>
+                                            </div>
+								<a href="{{ route('fontend.order') }}" class="button cart_button_checkout">Xác nhận giỏ hàng</a>
+							</div>
+						@endif
 					</div>
 				</div>
 			</div>

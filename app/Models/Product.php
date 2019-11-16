@@ -5,6 +5,8 @@ use App\Models\Category;
 use App\Models\Image;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Order;
+use App\Models\Order_detail;
 
 class Product extends Model
 {
@@ -18,5 +20,8 @@ class Product extends Model
     }
     protected function images(){
     	return $this->hasMany(Image::class, 'product_id');
+    }
+    protected function Order_detail(){
+        return $this->belongsTo(Order_detail::class);
     }
 }

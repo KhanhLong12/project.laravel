@@ -29,7 +29,7 @@
 						<div class="footer_title">Tìm nhanh</div>
 						<ul class="footer_list">
 							@foreach($categories as $category)
-								<li><a href="#">{{ $category->name }}</a></li>
+								<li><a href="{{ route('fontend.product.shop', $category->slug) }}">{{ $category->name }}</a></li>
 							@endforeach
 						</ul>
 					</div>

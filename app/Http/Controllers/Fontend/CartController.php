@@ -12,15 +12,23 @@ class CartController extends Controller
 {
     public function index(){
     	$item = Cart::content();
-    	// dd($item);
+        // dd($item);
     	return view('fontend.product.cart')->with([
     		'item' => $item,
-
     	]);
     }
     public function add($id){
     	$product = Product::find($id);
-    	Cart::add(['id' => $product->id ,'name' => $product->name , 'qty' => 1 , 'price' => $product->sale_price ,'weight' => 0 , 'options' => [ 'image' => $product->images[0]->path]]);
+    	Cart::add(['id' => $product->id ,'name' => $product->name , 'qty' => 1 , 'price' => $product->origin_price ,'weight' => 0 , 'options' => [ 'image' => $product->images[0]->path]]);
     	return redirect()->route('fontend.indexcart');
+    }
+    public function delete(Request $request){
+        Cart::destroy();
+        if (Cart::destroy() == 0) {
+            $request->session()->flash('success','Xóa giỏ hàng thành công');
+        }else{
+            $request->session()->flash('error','Xóa giỏ hàng không thành công');
+        }
+        return redirect()->route('fontend.indexcart');
     }
 }

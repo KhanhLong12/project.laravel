@@ -38,13 +38,6 @@ class ProductController extends Controller
             return view('backend.product.index')->with([
                 'products'    => $products
             ]);
-        // }else{
-        //     return view(abort(404));
-        // }
-        // $products = Product::with('category')->get();
-        // foreach ($products as $product) {
-        //     echo $product->category->name;
-        // }
     }
 
     /**
@@ -66,15 +59,13 @@ class ProductController extends Controller
         // return Storage::disk('local')->download('file.txt','long.txt');//dowload file
         $categories = Category::get();
         $user = Auth::user();
-        // if (Gate::forUser($user)->allows('update-product', $product)) {
-        //     // User này có thể cập nhật sản phẩm
-        // }
+        // $images = Image::();
         if ($user->can('create', Product::class)) {
-            return view('backend.product.create')->with(['categories' => $categories]);
+            return view('backend.product.create')->with([
+                'categories' => $categories,
+                // 'images' => $images
+            ]);
         }
-        // if (Gate::allows('check-role', $user)) {
-        //     return view('backend.product.create')->with(['categories' => $categories]);
-        // }
         else{
             return redirect()->route('backend.error',$user);
         }
@@ -205,6 +196,51 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request);
+        $product = Product::find($id);
+        $data = $request->all();
+        $data['slug'] = \Illuminate\Support\Str::slug($request->name);
+        $validator = Validator::make($data,
+            [
+                'name'         => 'required|min:8|max:255',
+                'content'      => 'required|min:5',
+                'origin_price' => 'required|numeric',
+                'category_id'  => 'integer',
+                'status'       => 'in:0,1,2',
+                'slug'         => 'required|min:8|max:255|unique:products,slug,' . $product->id,
+                'sale_price'   => 'required|numeric',
+            ],
+            [
+                'name.max'       => ':attribute không được lớn hơn :max',    
+                'content.min'       => ':attribute không được nhỏ hơn :max',    
+                'required'  => ':attribute không được để trống',
+                'in'        => 'chọn không đúng :attribute',
+                'integer'   => 'Chưa chọn :attribute',
+                'min'       => ':attribute không được nhỏ hơn :min',
+                'numeric'   => ':attribute nhập vào phải là kiểu số',
+            ],
+            [
+                'category_id'   => 'danh mục',
+                'status'        => 'trạng thái',
+                'name'          => 'Tên sản phẩm',
+                'origin_price'  => 'Giá nhập vào',
+                'sale_price'    => 'Giá bán',
+                'content'       => 'nội dung',
+            ]
+        );
+        if ($validator->fails()){
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $product->name = $request->get('name');
+        $product->slug = \Illuminate\Support\Str::slug($request->get('name'));
+        $product->category_id = $request->get('category_id');
+        $product->sale_price = $request->get('sale_price');
+        $product->origin_price = $request->get('origin_price');
+        $product->content = $request->get('content');
+        $product->status = $request->get('status');
+        // $product->user_id = Auth::user()->id;
+        $save = $product->save();
         $info_images = [];
         if ($request->hasFile('images')) {
 
@@ -223,17 +259,6 @@ class ProductController extends Controller
         else{
             echo "không";
         }
-        $product = Product::find($id);
-        $product->name = $request->get('name');
-        $product->slug = \Illuminate\Support\Str::slug($request->get('name'));
-        $product->category_id = $request->get('category_id');
-        $product->sale_price = $request->get('sale_price');
-        $product->origin_price = $request->get('origin_price');
-        $product->content = $request->get('content');
-        $product->status = $request->get('status');
-        // $product->user_id = Auth::user()->id;
-        $save = $product->save();
-        
         foreach ($info_images as $img) {
             $image = new Image();
             $image->name = $img['name'];

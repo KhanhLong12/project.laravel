@@ -41,7 +41,11 @@
 								<div>
 									<a href="#">
 										@if( Illuminate\Support\Facades\Auth::user()->name)
-										 xin chào {{Illuminate\Support\Facades\Auth::user()->name}}
+											@if(Illuminate\Support\Facades\Auth::user()->userInfo->fullname != null)
+										 		xin chào {{Illuminate\Support\Facades\Auth::user()->userInfo->fullname}}
+										 	@else
+										 		xin chào {{Illuminate\Support\Facades\Auth::user()->name}}
+										 	@endif
 										@else
 											Sign in
 										@endif
@@ -87,11 +91,11 @@
 										<input type="search" required="required" class="header_search_input" placeholder="Search for products...">
 										<div class="custom_dropdown">
 											<div class="custom_dropdown_list">
-												<span class="custom_dropdown_placeholder clc">All Categories</span>
+												<span class="custom_dropdown_placeholder clc">Tất cả danh mục</span>
 												<i class="fas fa-chevron-down"></i>
 												<ul class="custom_list clc">
 													@foreach($categories as $category)
-															<li><a class="clc" href="{{ route('fontend.product.shop') }}">{{ $category->name }}</a></li>
+															<li><a class="clc" href="">{{ $category->name }}</a></li>
 													@endforeach
 												</ul>
 											</div>
@@ -147,12 +151,12 @@
 							<div class="cat_menu_container">
 								<div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
 									<div class="cat_burger"><span></span><span></span><span></span></div>
-									<div class="cat_menu_text">categories</div>
+									<div class="cat_menu_text">Danh mục</div>
 								</div>
 
 								<ul class="cat_menu">
 									@foreach($categories as $category)
-										<li><a href="#">{{ $category->name }}<i class="fas fa-chevron-right ml-auto"></i></a></li>
+										<li><a href="{{ route('fontend.product.shop', $category->slug) }}">{{ $category->name }}<i class="fas fa-chevron-right ml-auto"></i></a></li>
 									@endforeach
 								</ul>
 							</div>
@@ -161,17 +165,17 @@
 
 							<div class="main_nav_menu ml-auto">
 								<ul class="standard_dropdown main_nav_dropdown">
-									<li><a href="{{ route('fontend.index') }}">Home<i class="fas fa-chevron-down"></i></a></li>
+									<li><a href="{{ route('fontend.index') }}">Trang chủ<i class="fas fa-chevron-down"></i></a></li>
 									<li class="hassubs">
-										<a href="#">Super Deals<i class="fas fa-chevron-down"></i></a>
+										<a href="#">Danh mục<i class="fas fa-chevron-down"></i></a>
 										<ul>
 											@foreach($categories as $category)
 											<li>
-												<a href="#">{{ $category->name }}<i class="fas fa-chevron-down"></i></a>
+												<a href="{{ route('fontend.product.shop', $category->slug) }}">{{ $category->name }}<i class="fas fa-chevron-down"></i></a>
 												<ul>
 													@foreach($categories1 as $category1)
 														@if($category->id == $category1->parent_id)
-															<li><a href="#">{{ $category1->name }}<i class="fas fa-chevron-down"></i></a></li>
+															<li><a href="{{ route('fontend.product.shop', $category->slug) }}">{{ $category1->name }}<i class="fas fa-chevron-down"></i></a></li>
 														@endif
 													@endforeach
 												</ul>

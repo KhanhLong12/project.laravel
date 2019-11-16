@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\StoreEditInfoRequest;
+use App\Http\Requests\StoreUserUpdateRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Auth;
 class UserController extends Controller
 {
@@ -112,7 +115,7 @@ class UserController extends Controller
             return redirect()->route('backend.user.reset');
         }elseif ($user->password == bcrypt($passwordold)) {
             $user->password = bcrypt($passwordnew);
-            dd($user->password);
+            // dd($user->password);
             $save = $user->save();
             if ($save) {
                 $request->session()->flash('success5','Đổi mật khẩu thành công');
@@ -153,7 +156,7 @@ class UserController extends Controller
         }
         return redirect()->route('backend.user.editinfo',Auth::user());
     }
-    public function updateinfo(Request $request,$id)
+    public function updateinfo(StoreEditInfoRequest $request,$id)
     {
         $user = User::find($id);
         $user->phone = $request->get('phone');
@@ -178,8 +181,10 @@ class UserController extends Controller
         $user = User::find($id);
         // dd($userInfo);
         $userInfo = $user->userInfo;
+        // dd($user);
         return view('backend.user.detail')->with([
-            'user' => $user
+            'user' => $user,
+            'userInfo' => $userInfo,
         ]);
     }
 
@@ -211,7 +216,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUserUpdateRequest $request, $id)
     {
         $user = User::find($id);
         if ($request->hasFile('images')) {
@@ -224,6 +229,7 @@ class UserController extends Controller
             echo "không";
         }
         $user->name = $request->get('username');
+        $user->email = $request->get('email');
         $user->phone = $request->get('phone');
         $user->role = $request->get('role');
         $user->sex = $request->get('sex');

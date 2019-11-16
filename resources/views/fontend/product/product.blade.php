@@ -38,13 +38,15 @@
 						<div class="product_category">{{ $product->category->name }}</div>
 						<div class="product_name">{{ $product->name }}</div>
 						<div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>
-						<div class="product_text"><p>{!! $product->content !!}</p></div>
+						<div class="product_text" style="word-break: break-all;"><p>{!! $product->content !!}</p></div>
 						<div class="order_info d-flex flex-row">
 							<form action="#">
 								<div class="clearfix" style="z-index: 1000;">
-
+									<div>
+										<span style="font-weight: bold">Lượt xem : <span style="color: #777">{{ $product->view_count }}</span></span>
+									</div>
 									<!-- Product Quantity -->
-									<div class="product_quantity clearfix">
+									{{-- <div class="product_quantity clearfix">
 										<span>Quantity: </span>
 										<input id="quantity_input" type="text" pattern="[0-9]*" value="1">
 										<div class="quantity_buttons">
@@ -53,7 +55,7 @@
 										</div>
 									</div>
 
-									<!-- Product Color -->
+									< Product Color >
 									<ul class="product_color">
 										<li>
 											<span>Color: </span>
@@ -66,7 +68,7 @@
 												<li><div class="color_mark" style="background: #000000;"></div></li>
 											</ul>
 										</li>
-									</ul>
+									</ul> --}}
 
 								</div>
 
@@ -106,94 +108,26 @@
 						<div class="owl-carousel owl-theme viewed_slider">
 							
 							<!-- Recently Viewed Item -->
-							<div class="owl-item">
-								<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
-									<div class="viewed_image"><img src="/fontend/images/view_1.jpg" alt=""></div>
-									<div class="viewed_content text-center">
-										<div class="viewed_price">$225<span>$300</span></div>
-										<div class="viewed_name"><a href="#">Beoplay H7</a></div>
+							@foreach($producttogether as $producttogethe)
+								<a href="{{ route('fontend.product.product',$producttogethe->slug) }}">
+									<div class="owl-item">
+										<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
+											@if(count($producttogethe->images) > 0)
+			                                    <div class="bestsellers_image"><img height="150px" width="185px" src="/{{$producttogethe->images[0]->path}}" alt=""></div>
+                                            @else
+                                            	<div><img height="150px" width="185px" src="/default.JPG" alt=""></div>
+                                            @endif
+											<div class="viewed_content text-center">
+												<div class="viewed_price">{{$producttogethe->origin_price}}</div>
+												<div class="viewed_name"><a href="#">{{$producttogethe->name}}</a></div>
+											</div>
+											<ul class="item_marks">
+												<li class="item_mark item_new">new</li>
+											</ul>
+										</div>
 									</div>
-									<ul class="item_marks">
-										<li class="item_mark item_discount">-25%</li>
-										<li class="item_mark item_new">new</li>
-									</ul>
-								</div>
-							</div>
-
-							<!-- Recently Viewed Item -->
-							<div class="owl-item">
-								<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
-									<div class="viewed_image"><img src="/fontend/images/view_2.jpg" alt=""></div>
-									<div class="viewed_content text-center">
-										<div class="viewed_price">$379</div>
-										<div class="viewed_name"><a href="#">LUNA Smartphone</a></div>
-									</div>
-									<ul class="item_marks">
-										<li class="item_mark item_discount">-25%</li>
-										<li class="item_mark item_new">new</li>
-									</ul>
-								</div>
-							</div>
-
-							<!-- Recently Viewed Item -->
-							<div class="owl-item">
-								<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
-									<div class="viewed_image"><img src="/fontend/images/view_3.jpg" alt=""></div>
-									<div class="viewed_content text-center">
-										<div class="viewed_price">$225</div>
-										<div class="viewed_name"><a href="#">Samsung J730F...</a></div>
-									</div>
-									<ul class="item_marks">
-										<li class="item_mark item_discount">-25%</li>
-										<li class="item_mark item_new">new</li>
-									</ul>
-								</div>
-							</div>
-
-							<!-- Recently Viewed Item -->
-							<div class="owl-item">
-								<div class="viewed_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-									<div class="viewed_image"><img src="/fontend/images/view_4.jpg" alt=""></div>
-									<div class="viewed_content text-center">
-										<div class="viewed_price">$379</div>
-										<div class="viewed_name"><a href="#">Huawei MediaPad...</a></div>
-									</div>
-									<ul class="item_marks">
-										<li class="item_mark item_discount">-25%</li>
-										<li class="item_mark item_new">new</li>
-									</ul>
-								</div>
-							</div>
-
-							<!-- Recently Viewed Item -->
-							<div class="owl-item">
-								<div class="viewed_item discount d-flex flex-column align-items-center justify-content-center text-center">
-									<div class="viewed_image"><img src="/fontend/images/view_5.jpg" alt=""></div>
-									<div class="viewed_content text-center">
-										<div class="viewed_price">$225<span>$300</span></div>
-										<div class="viewed_name"><a href="#">Sony PS4 Slim</a></div>
-									</div>
-									<ul class="item_marks">
-										<li class="item_mark item_discount">-25%</li>
-										<li class="item_mark item_new">new</li>
-									</ul>
-								</div>
-							</div>
-
-							<!-- Recently Viewed Item -->
-							<div class="owl-item">
-								<div class="viewed_item d-flex flex-column align-items-center justify-content-center text-center">
-									<div class="viewed_image"><img src="/fontend/images/view_6.jpg" alt=""></div>
-									<div class="viewed_content text-center">
-										<div class="viewed_price">$375</div>
-										<div class="viewed_name"><a href="#">Speedlink...</a></div>
-									</div>
-									<ul class="item_marks">
-										<li class="item_mark item_discount">-25%</li>
-										<li class="item_mark item_new">new</li>
-									</ul>
-								</div>
-							</div>
+								</a>
+							@endforeach
 						</div>
 
 					</div>

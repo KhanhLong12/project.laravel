@@ -31,9 +31,9 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>{{ $demcategories }}</h3>
+                                <h3>{{ $Order }}</h3>
 
-                                <p>Danh mục</p>
+                                <p>Đơn hàng</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
@@ -63,7 +63,7 @@
                             <div class="inner">
                                 <h3>{{ $demusers }}</h3>
 
-                                <p>Người đăng ký</p>
+                                <p>Khách hàng</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
@@ -76,7 +76,7 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>65,000,000 </h3>
+                                <h3>{{number_format($demorder)}} VNĐ</h3>
 
                                 <p>Doanh thu</p>
                             </div>

@@ -38,7 +38,7 @@
                                 @error('email')
                                     <a style="color: red;"> ! {{ $message }}</a>
                                 @enderror
-                                <input name="email" type="email" class="form-control" id="" placeholder="Email" value="{{ old('email') }}">
+                                <input name="email" type="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Số điện thoại :</label>

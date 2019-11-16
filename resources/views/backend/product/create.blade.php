@@ -95,6 +95,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">Hình ảnh sản phẩm :<span style="color: #dc3545;">*</span></label>
+                                @if(isset($images))
+                                    @foreach($images as $image)
+                                        <a data-toggle="modal" data-target="#exampleModalCenter-{{$image->id}}"><img src="/{{ $image->path }}" width=100px height=100px></a>
+                                    @endforeach
+                                @endif
                                 @error('images')
                                     <a style="color: red;">! {{ $message }}</a>
                                 @enderror

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserRequest extends FormRequest
+class StoreCategoryUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,23 +24,14 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-             'email'        => 'required|email',
-             'password'     => 'required|min:8',
-             'role'       => 'in:0,1,2',
-             'sex'       => 'in:0,1,2',
-             'username'     => 'required|min:5|max:50',
-             'phone'        => 'required|numeric',
-             'images' => 'image|max:2000',
+             'name'        => 'required|min:3|max:255',
+             'description'     => 'required|min:5|max:100',
         ];
     }
     public function messages()
     {
         return [
             'required' => ':attribute Không được để trống',
-            'email' => ':attribute cần nhập đúng định dạng',
-            'images.*.image' => ':attribute sai định dạng',
-            'numeric' => ':attribute phải là kiểu số',
-            'in' => 'chọn :attribute',
             'min' => ':attribute không được nhỏ hơn :min',
             'max' => ':attribute Không được lớn hơn :max',
         ];
@@ -54,13 +45,8 @@ class StoreUserRequest extends FormRequest
     public function attributes()
     {
         return [
-            'email' => 'Email',
-            'images' => 'ảnh',
-            'username' => 'Tên',
-            'role' => 'quyền',
-            'sex' => 'Giới tính',
-            'password' => 'Mật khẩu',
-            'phone' => 'Số điện thoại',
+            'name' => 'tên',
+            'description' => 'Mô tả',
         ];
     }
 }

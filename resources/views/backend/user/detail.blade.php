@@ -2,7 +2,7 @@
 @section('content-header')
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Chi tiết sản phẩm</h1>
+                <h1 class="m-0 text-dark">Thông tin</h1>
                 <a href="{{ route('backend.user.index') }}" class="btn btn-primary">Về trang danh sách</a>
             </div><!-- /.col -->
             <div class="col-sm-6">
@@ -19,13 +19,33 @@
         <hr width="100%">
             <tr>
               <th scope="row">Họ tên: </th>
+              @if($user->userInfo->fullname == null)
               <td>{{ $user->name }}</td>
+              @else
+              <td>{{ $user->userInfo->fullname }}</td>
+              @endif
             </tr>
             <tr>
               <th scope="row">hình ảnh: </th>
                 <td>
                     <img style="padding:0 10px;" width=200px height=200px src="{{ url($user->avatar) }}">
                 </td>
+            </tr>
+            <tr>
+              <th scope="row">Địa chỉ: </th>
+              @if($user->userInfo->address == null)
+              <td><span style="color: orange">chưa xác định</span></td>
+              @else
+              <td>{{ $user->userInfo->address }}</td>
+              @endif
+            </tr>
+            <tr>
+              <th scope="row">Ngày sinh: </th>
+              @if($user->userInfo->birthday == null)
+              <td><span style="color: orange">chưa xác định</span></td>
+              @else
+              <td>{{ $user->userInfo->birthday }}</td>
+              @endif
             </tr>
             <tr>
               <th scope="row">Email: </th>

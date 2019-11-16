@@ -59,7 +59,7 @@
                         <div class="card-body col-md-6" style="float: left;">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Họ và Tên: <span style="color: #dc3545;">*</span></label>
-                                @error('username')
+                                @error('fullname')
                                     <a style="color: red;"> ! {{ $message }}</a>
                                 @enderror
                                 <input style="border-top: none; border-right: none;border-left: none; " name="fullname" type="text" class="form-control" id="" placeholder="Name" value="{{ $userInfo->fullname }}">

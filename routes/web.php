@@ -52,15 +52,23 @@ Route::prefix('admin')->namespace('Backend')->middleware('auth')->group(function
     Route::prefix('images')->group(function(){
       Route::delete('/destroy/{id}/{product_id}','ImageController@destroy')->name('backend.image.destroy');
     });
+    Route::prefix('bill')->group(function(){
+      Route::get('','BillController@index')->name('backend.bill.index');
+      Route::get('/billupdate/{id}','BillController@billupdate')->name('backend.bill.billupdate');
+      Route::delete('/destroy/{id}','BillController@destroy')->name('backend.bill.destroy');
+    });
 });
 Route::prefix('user')->namespace('Fontend')->group(function(){
     Route::get('/','ProductController@index')->name('fontend.index');
     Route::get('/getcache', 'ProductController@getcache')->name('getcache');
     Route::get('/indexcart','CartController@index')->name('fontend.indexcart');
+    Route::get('/order','OrderController@index')->name('fontend.order');
+    Route::post('/orderstore','OrderController@orderstore')->name('fontend.orderstore');
     Route::get('/cartadd/{id}','CartController@add')->name('fontend.cartadd');
+    Route::delete('/deletecart','CartController@delete')->name('fontend.deletecart');
     Route::get('/contact','ProductController@contact')->name('fontend.product.contact');
     Route::get('/product/{slug}','ProductController@product')->name('fontend.product.product');
-    Route::get('/shop','ProductController@shop')->name('fontend.product.shop');
+    Route::get('/shop/{slug}','ProductController@shop')->name('fontend.product.shop');
 });
 
 // Route::group([
