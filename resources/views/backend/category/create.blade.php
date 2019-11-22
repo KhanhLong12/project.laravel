@@ -19,7 +19,7 @@
                 <!-- general form elements -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Tạo mới category</h3>
+                        <h3 class="card-title">Tạo mới danh mục</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -31,10 +31,10 @@
                                 @error('name')
                                     <a style="color: red;"> ! {{ $message }}</a>
                                 @enderror
-                                <input value="{{old('name')}}" name="name" type="text" class="form-control" id="" placeholder="Tên category">
+                                <input value="{{old('name')}}" name="name" type="text" class="form-control" id="" placeholder="Tên danh mục">
                             </div>
                             <div class="form-group">
-                                <label>parent category</label>
+                                <label>Danh mục cha</label>
                                 <select name="parent_id" class="form-control select2" style="width: 100%;">
                                     <option value="0">--Danh mục cha---</option>
                                     @foreach($categories as $category)
@@ -43,7 +43,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputFile">Thumbnail: <span style="color: #dc3545;">*</span></label>
+                                <label for="exampleInputFile">Ảnh: <span style="color: #dc3545;">*</span></label>
                                 @error('images')
                                     <a style="color: red;"> ! {{ $message }}</a>
                                 @enderror
@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Description: <span style="color: #dc3545;">*</span></label>
+                                <label>Mô tả: <span style="color: #dc3545;">*</span></label>
                                 @error('description')
                                     <a style="color: red;"> ! {{ $message }}</a>
                                 @enderror

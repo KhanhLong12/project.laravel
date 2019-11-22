@@ -31,6 +31,7 @@ class StoreProductRequest extends FormRequest
             'category_id'  => 'integer',
             'status'       => 'in:0,1,2',
             'sale_price'   => 'required|numeric',
+            'quantity'     => 'required|numeric',
             'images.*'     => 'max:2000|mimes:jpeg,jpg,png,gif',
             'images'       => 'required',
         ];
@@ -71,6 +72,7 @@ class StoreProductRequest extends FormRequest
             'name'          => 'Tên sản phẩm',
             'origin_price'  => 'Giá nhập vào',
             'sale_price'    => 'Giá bán',
+            'quantity'    => 'Số lượng',
             'content'       => 'nội dung',
         ];
     }

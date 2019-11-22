@@ -11,6 +11,7 @@ use App\Http\Requests\StoreUserUpdateRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
@@ -106,6 +107,8 @@ class UserController extends Controller
         $passwordold = $request->get('passwordold');
         $passwordnew = $request->get('passwordnew');
         $repasswordnew = $request->get('repasswordnew');
+        $credentials = $user->only('email', 'password');
+        // dd($credentials);
         // dd($passwordold,$passwordnew,$repasswordnew);
         if (empty($passwordold) || empty($passwordold) || empty($passwordold)) {
             $request->session()->flash('error5','trường * không được để trống');
@@ -113,9 +116,8 @@ class UserController extends Controller
         }elseif ( $passwordnew != $repasswordnew) {
             $request->session()->flash('error5','Mật khẩu mới không trùng nhau');
             return redirect()->route('backend.user.reset');
-        }elseif ($user->password == bcrypt($passwordold)) {
+        }elseif (Hash::check($passwordold,$user->password)) {
             $user->password = bcrypt($passwordnew);
-            // dd($user->password);
             $save = $user->save();
             if ($save) {
                 $request->session()->flash('success5','Đổi mật khẩu thành công');

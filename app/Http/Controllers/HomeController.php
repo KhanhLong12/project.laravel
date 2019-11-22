@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\User;
 use Illuminate\Support\Facades\Gate;
+use App\Models\Order;
 class HomeController extends Controller
 {
     /**
@@ -29,14 +30,20 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $demproducts = Product::count('id');
-        $demcategories = Category::count('id');
+        $orders = Order::Where('status',1)->get();
+        $demorder = 0;
+        foreach ($orders as $order) {
+            $demorder += (int)str_replace(',', '',$order->total);
+        }
+        $Order = Order::count('id');
         $demusers = User::Where('role' , '=' , 0)->count('id');
         $products = Product::OrderBy('created_at','DESC')->limit(5)->get();
         // if (Gate::allows('check-role', $user)) {
             return view('backend.dashboard_full')->with([
                 'demproducts'   => $demproducts,
                 'demusers'      => $demusers,
-                'demcategories' => $demcategories,
+                'Order' => $Order,
+                'demorder'      => $demorder,
                 'products'      => $products
         ]);
         // }else{

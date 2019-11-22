@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\StoreProductRequest;
+use Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -29,8 +31,7 @@ class LoginController extends Controller
      * @var string
      */
     //login thành công thì sẽ về trang chủ
-    protected $redirectTo = '/home';
-
+        protected $redirectTo = '/dashboard_full';
     /**
      * Create a new controller instance.
      *
@@ -51,7 +52,7 @@ class LoginController extends Controller
         // $email = $request->get('email');
         // $password = $request->get('password');
         // $user = User::Where('email', $email);
-        // if ($user->password === bcrypt($password)) {
+        // if (Hash::check($password, $user->password)) {
         //      echo "đăng nhập thành công";
         // }else{
         //     echo "sai tên tk hoặc mk";

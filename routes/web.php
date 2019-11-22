@@ -62,6 +62,7 @@ Route::prefix('user')->namespace('Fontend')->group(function(){
     Route::get('/','ProductController@index')->name('fontend.index');
     Route::get('/getcache', 'ProductController@getcache')->name('getcache');
     Route::get('/indexcart','CartController@index')->name('fontend.indexcart');
+    Route::get('/updatecart/{id}','CartController@update')->name('fontend.updatecart');
     Route::get('/order','OrderController@index')->name('fontend.order');
     Route::post('/orderstore','OrderController@orderstore')->name('fontend.orderstore');
     Route::get('/cartadd/{id}','CartController@add')->name('fontend.cartadd');
@@ -79,7 +80,7 @@ Route::prefix('user')->namespace('Fontend')->group(function(){
 // });
 
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard_full', 'HomeController@index')->name('dashboard_full');
 
 Route::get('/cookie/set','CookieController@set')->name('cookie.set');
 Route::get('/cookie/get','CookieController@get')->name('cookie.get');//luwu treen trinh duyet

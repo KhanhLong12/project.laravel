@@ -81,7 +81,6 @@
                                             @if( isset($product->images[0]->path) )
                                              <img height="100px" width="100px" src="/{{ $product->images[0]->path }}">
                                              <br>
-                                            <a href="{{ route('backend.product.images',$product->id) }}">Xem thêm</a>
                                             @endif
                                         </td>
                                         <td>

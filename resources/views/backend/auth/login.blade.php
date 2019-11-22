@@ -1,6 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="vendor/assets/css/docs.theme.min.css">
+  <link rel="stylesheet" href="vendor/assets/owlcarousel/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="vendor/assets/owlcarousel/assets/owl.theme.default.min.css">
+  <link rel="stylesheet" type="text/css" href="vendor/css/main.css">
+  <style type="text/css">
+    .loginAdmin .formlogin .designer span{
+      position: absolute;
+      font-size: 14px;
+      bottom: 10px;
+      left: 30%;
+    }
+    .loginAdmin .img ol li{
+        border-radius: 10px;
+        height: 10px;
+        width: 10px;
+    }
+      .loginAdmin .img .img1 img{
+        height: 450px;
+        border-radius:0 10px 10px 0;
+      }
+  </style>
+</head>
+<body>
+  <div class="body1" style="background: linear-gradient(to bottom, #FFB88C, #DE6262);background-repeat: no-repeat;width: 100%;">
+    <div class="container loginAdmin" style="height: 650px;padding: 70px 50px;">
+        <div class="row" style="background-color: white;border-radius: 15px;">
+            <div class="col-md-5 formlogin" style="padding-top: 20px;">
+                <div style="text-align: center;">
+                    <span style="font-weight: bold;font-size: 25px;color: #DE6262;">My Stock v2
+                  </span>
+                    <hr style="width: 100px;height: 5px;background: #FEB58A;border-radius: 3px;margin-left: auto; margin-right: auto;">
+                </div>
+                @if($errors->any())
+                    <div class="alert alert-danger">sai tên đăng nhập hoặc mật khẩu</div>
+                @endif
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="form-group">
+                        <label style="font-size: 14px;" for="exampleInputEmail1">Tên tài khoản</label>
+                        <input type="email" style="border-radius: 5px;" class="form-control" required placeholder="Email" aria-describedby="emailHelp" name="email" value="{{ old('email') }}">
+                   </div>
+                   <div class="form-group">
+                        <label style="font-size: 14px;"  for="exampleInputPassword1">Mật khẩu</label>
+                        <input type="password" style="border-radius: 5px;" required class="form-control" placeholder="Password" name="password">
+                     </div>
+                     <div>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        </div>
+                    <a href="#" style="margin-top: 10px;" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                    </a>
+                </form>
+                <p class="mb-0">
+                    <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
+                </p>
+            </div>
+            <div class="col-md-7 img" style="padding-right: 0px;padding-left: 0px;">
+                <div id="loginAdmin" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                      <li data-target="#loginAdmin" data-slide-to="0" class="active"></li>
+                      <li data-target="#loginAdmin" data-slide-to="1"></li>
+                      <li data-target="#loginAdmin" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner img1">
+                      <div class="carousel-item active">
+                        <img class="d-block w-100" src="/backend/dist/img/imgAdmin.jpg" alt="First slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="d-block w-100" src="/backend/dist/img/imgAdmin1.jpg" alt="Second slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="d-block w-100" src="/backend/dist/img/imgAdmin2.png" alt="Third slide">
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="vendor/assets/vendors/jquery.min.js"></script>
+  <script src="vendor/assets/owlcarousel/owl.carousel.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
+
+{{-- <!DOCTYPE html>
+<html>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>AdminLTE 3 | Dashboard</title>
@@ -134,4 +229,4 @@
 <!-- AdminLTE for demo purposes -->
 <script src="/backend/dist/js/demo.js"></script>
 </body>
-</html>
+</html> --}}

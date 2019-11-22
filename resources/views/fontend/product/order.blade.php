@@ -23,21 +23,21 @@
                                 @error('name')
                                     <a style="color: red;"> ! {{ $message }}</a>
                                 @enderror
-                                <input style="border-top: none; border-right: none;border-left: none; " name="name" type="text" value="{{ old('name') }}" class="form-control" id="" placeholder="Nhập tên">
+                                <input style="border-top: none; border-right: none;border-left: none; " name="name" type="text" value="{{ Auth::user()->name }}" class="form-control" id="" placeholder="Nhập tên">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email: <span style="color: #dc3545;">*</span></label>
                                 @error('email')
                                     <a style="color: red;"> ! {{ $message }}</a>
                                 @enderror
-                                <input style="border-top: none; border-right: none;border-left: none; " name="email" type="email" class="form-control" value="{{ old('email') }}" placeholder="Nhập email">
+                                <input style="border-top: none; border-right: none;border-left: none; " name="email" type="email" class="form-control" value="{{ Auth::user()->email }}" placeholder="Nhập email">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Số điện thoại: <span style="color: #dc3545;">*</span></label>
                                 @error('phone')
                                     <a style="color: red;"> ! {{ $message }}</a>
                                 @enderror
-                                <input style="border-top: none; border-right: none;border-left: none; " name="phone" type="text" class="form-control" value="{{ old('phone') }}" placeholder="Nhập số điện thoại">
+                                <input style="border-top: none; border-right: none;border-left: none; " name="phone" type="text" class="form-control" value="{{ Auth::user()->phone }}" placeholder="Nhập số điện thoại">
                             </div>
                         </div>
                         <div class="card-body col-md-6" style="float: left;">

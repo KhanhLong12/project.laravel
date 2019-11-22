@@ -3,7 +3,7 @@
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">hình ảnh</h1>
-                <a href="{{ route('backend.product.index') }}" class="btn btn-primary">back</a>
+                <a href="{{ route('backend.product.edit',$item->id) }}" class="btn btn-primary">back</a>
                 @if(session()->has('success2'))
                     <div class="alert alert-danger" role="alert">
                         {{ session()->get('success2') }}
@@ -29,11 +29,6 @@
                         <h3 class="card-title">hình ảnh sản phẩm</h3>
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                </div>
                             </div>
                         </div>
                     </div>

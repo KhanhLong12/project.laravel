@@ -65,6 +65,13 @@
                                     <option>Oppo</option>
                                 </select>
                             </div> --}}
+                            <div class="form-group">
+                                <label>Số lượng :<span style="color: #dc3545;">*</span></label>
+                                @error('quantity')
+                                    <a style="color: red;"> ! {{ $message }}</a>
+                                @enderror
+                                <input type="text" class="form-control" id="" placeholder="Điền số lượng " name="quantity" value="{{ $item->quantity }}">
+                            </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
@@ -95,6 +102,7 @@
                             </div>
                             <div class="form-group">
                                     <label>Hình ảnh sản phẩm đã có :</label>
+                                    <span><a href="{{ route('backend.product.images',$item->id) }}">Quản lý ảnh</a></span>
                                 <br>
                                 @foreach($images as $image)
                                     <a data-toggle="modal" data-target="#exampleModalCenter-{{$image->id}}"><img src="/{{ $image->path }}" width=100px height=100px></a>

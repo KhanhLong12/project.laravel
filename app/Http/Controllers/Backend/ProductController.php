@@ -103,6 +103,7 @@ class ProductController extends Controller
         $product->category_id = $request->get('category_id');
         $product->sale_price = $request->get('sale_price');
         $product->origin_price = $request->get('origin_price');
+        $product->quantity = $request->get('quantity');
         $product->content = $request->get('content');
         $product->status = $request->get('status');
         $product->user_id = Auth::user()->id;
@@ -206,6 +207,7 @@ class ProductController extends Controller
                 'origin_price' => 'required|numeric',
                 'category_id'  => 'integer',
                 'status'       => 'in:0,1,2',
+                'quantity'     => 'required|numeric',
                 'slug'         => 'required|min:8|max:255|unique:products,slug,' . $product->id,
                 'sale_price'   => 'required|numeric',
             ],
@@ -224,6 +226,7 @@ class ProductController extends Controller
                 'name'          => 'Tên sản phẩm',
                 'origin_price'  => 'Giá nhập vào',
                 'sale_price'    => 'Giá bán',
+                'quantity'    => 'Số lượng',
                 'content'       => 'nội dung',
             ]
         );
@@ -236,6 +239,7 @@ class ProductController extends Controller
         $product->slug = \Illuminate\Support\Str::slug($request->get('name'));
         $product->category_id = $request->get('category_id');
         $product->sale_price = $request->get('sale_price');
+        $product->quantity = $request->get('quantity');
         $product->origin_price = $request->get('origin_price');
         $product->content = $request->get('content');
         $product->status = $request->get('status');

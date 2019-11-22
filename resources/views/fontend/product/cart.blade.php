@@ -39,7 +39,11 @@
 															</div>
 															<div class="cart_item_quantity cart_info_col">
 																<div class="cart_item_title">Số lượng</div>
-																<div class="cart_item_text">{{ $item1->qty }}</div>
+																<div class="cart_item_text" style="width: 120px">
+																	<a href="" style="font-size: 25px;">-</a>
+																	<input style="width: 20%; border: none;text-align: center;" type="" name="quantity" value="{{ $item1->qty }}">
+																	<a style="font-size: 25px;" href="{{ route('fontend.updatecart', $item1->id) }}">+</a>
+																</div>
 															</div>
 															<div class="cart_item_price cart_info_col">
 																<div class="cart_item_title">Giá</div>

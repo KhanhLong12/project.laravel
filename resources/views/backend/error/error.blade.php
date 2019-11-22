@@ -20,8 +20,8 @@
 					<p class="w3-agileits1">Oops!</p>
 		            <canvas id="demo-canvas"></canvas>
 					<img src="/backend/dist/img/owl.gif" alt="flashy" class="w3l">
-		            <h2 class="main-title">404</span></h2>
-					<p class="w3-agileits2">We can't seem to find the page you're looking for.</p>
+		            <h2 class="main-title">403</span></h2>
+					<p class="w3-agileits2">You cannot view this item</p>
 					<p class="copyright">© 2019 Flashy Error Page. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">Khánh Long</a></p>
 		        </div>
 			</div>

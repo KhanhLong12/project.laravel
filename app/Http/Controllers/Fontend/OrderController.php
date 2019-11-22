@@ -48,7 +48,8 @@ class OrderController extends Controller
         $total = $bill->total;
         $name = $bill->customer_name;
         $email = $bill->customer_email;
-        Mail::send('fontend.emails.add2cart', ['email' => $email,'name' => $name,'total' => $total, 'bill' => $save,'carts' => $carts], function($mail) use ($email) {
+
+        Mail::send('fontend.emails.add2cart', ['email' => $email,'name' => $name,'total' => $total, 'bill' => $bill,'carts' => $carts], function($mail) use ($email) {
             $mail->to($email)->subject('Thông báo từ Mystock!');
         });
     	if ($save) {

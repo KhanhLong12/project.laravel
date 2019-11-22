@@ -13,6 +13,11 @@
                         {{ session()->get('success1') }}
                     </div> 
                 @endif
+                @if(session()->has('success2'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session()->get('success2') }}
+                    </div> 
+                @endif
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -50,8 +55,10 @@
                                 <th>ID</th>
                                 <th>Tên Danh mục</th>
                                 <th>Slug</th>
-                                <th>Created_at</th>
-                                <th>Action</th>
+                                @if(Auth::user()->role == 1)
+                                    <th>Created_at</th>
+                                    <th>Action</th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -60,9 +67,10 @@
                                 <td>{{ $category->id }}</td>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->slug }}</td>
-                                <td>{{ $category->created_at }}</td>
-                                <td>
-                                    <a href="{{ route('backend.category.edit', $category->id) }}"><i class="fas fa-edit"></i></a>
+                                @if(Auth::user()->role == 1)
+                                    <td>{{ $category->created_at }}</td>
+                                    <td>
+                                        <a href="{{ route('backend.category.edit', $category->id) }}"><i class="fas fa-edit"></i></a>
                                         <a href="{{ route('backend.category.destroy', $category->id) }}" data-toggle="modal" data-target="#exampleModalCenter-{{$category->id}}"><i class="fas fa-trash-alt"></i></a>
                                         <div class="modal fade" id="exampleModalCenter-{{$category->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -87,7 +95,8 @@
                                                 </div>
                                              </div>
                                         </div>
-                                </td>
+                                    </td>
+                                @endif
                             </tr>
                             @endforeach
                             </tbody>

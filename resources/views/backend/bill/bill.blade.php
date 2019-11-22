@@ -56,7 +56,6 @@
               @endif
             </td>
             @if($bill->status == 1)
-                Chưa giao hàng
                 <form role="form" method="post" action="{{ route('backend.bill.billupdate', $bill->id) }}" enctype="multipart/form-data">
                     <td><a href="{{ route('backend.bill.billupdate', $bill->id) }}"><i class="fas fa-check"></i></a></td>
                 </form>

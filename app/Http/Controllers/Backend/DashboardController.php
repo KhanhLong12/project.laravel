@@ -22,6 +22,7 @@ class DashboardController extends Controller
             $demorder += (int)str_replace(',', '',$order->total);
         }
         $Order = Order::count('id');
+        // dd($Order);
         $demusers = User::Where('role' , '=' , 0)->count('id');
         $products = Product::OrderBy('created_at','DESC')->limit(5)->get();
     	// dd($user);

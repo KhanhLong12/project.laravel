@@ -22,6 +22,12 @@ class CartController extends Controller
     	Cart::add(['id' => $product->id ,'name' => $product->name , 'qty' => 1 , 'price' => $product->origin_price ,'weight' => 0 , 'options' => [ 'image' => $product->images[0]->path]]);
     	return redirect()->route('fontend.indexcart');
     }
+    public function update($id){
+        $product = Product::find($id);
+        $rowID = $product->id;
+        // dd($rowID);
+        Cart::update($rowID,2);
+    }
     public function delete(Request $request){
         Cart::destroy();
         if (Cart::destroy() == 0) {

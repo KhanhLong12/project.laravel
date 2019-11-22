@@ -65,6 +65,13 @@
                                     <option>Oppo</option>
                                 </select>
                             </div> --}}
+                            <div class="form-group">
+                                <label>Số lượng :<span style="color: #dc3545;">*</span></label>
+                                @error('quantity')
+                                    <a style="color: red;"> ! {{ $message }}</a>
+                                @enderror
+                                <input type="text" class="form-control" id="" placeholder="Điền số lượng " name="quantity" value="{{ old('quantity') }}">
+                            </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">

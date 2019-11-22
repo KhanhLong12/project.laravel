@@ -30,14 +30,16 @@
 								</ul>
 							</div>
 							<div class="top_bar_user">
-								<div class="user_icon"><img src="/fontend/images/user.svg" alt=""></div>
-								<div><a href="#">
 									@if( Illuminate\Support\Facades\Auth::user()->role)
-										<a href="{{ route('backend.dashboard') }}">Quản lý tài khoản</a>
+									<div class="user_icon"><img src="/fontend/images/user.svg" alt=""></div>
+										<div>
+											<a href="#">
+												<a href="{{ route('backend.dashboard') }}">Quản lý tài khoản</a>
+											</a>
+										</div>
 									@else
-										Register
+										{{-- Register --}}
 									@endif
-								</a></div>
 								<div>
 									<a href="#">
 										@if( Illuminate\Support\Facades\Auth::user()->name)

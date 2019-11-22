@@ -31,7 +31,13 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>{{ $Order }}</h3>
+                                <h3>    
+                                    @if(isset($Order))
+                                    {{ $Order }}
+                                    @else
+                                        Đang cập nhật
+                                    @endif
+                                </h3>
 
                                 <p>Đơn hàng</p>
                             </div>
@@ -76,7 +82,13 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>{{number_format($demorder)}} VNĐ</h3>
+                                <h3>
+                                    @if(isset($demorder))
+                                        {{number_format($demorder)}} VNĐ
+                                    @else
+                                        Đang cập nhật
+                                    @endif
+                                </h3>
 
                                 <p>Doanh thu</p>
                             </div>

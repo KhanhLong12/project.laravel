@@ -156,6 +156,11 @@ class CategoryController extends Controller
         $user = Auth::user();
         if ($user->can('delete',Category::find($id))) {
             Category::destroy($id);
+            if (Category::destroy($id) == 0) {
+                $request->session()->flash('success2','Cập nhật category thành công');
+            }else{
+                $request->session()->flash('error2','Cập nhật category không thành công');
+            }
             return redirect()->route('backend.category.index');   
         }else{
             return redirect()->route('backend.error',$user);
