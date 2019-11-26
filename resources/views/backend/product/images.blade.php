@@ -35,7 +35,10 @@
                     <div class="form-group">
                         <br>
                                @foreach($images as $image)
-                                    <a style="padding: 20px;" href="{{ $image->name }}" data-toggle="modal" data-target="#exampleModalCenter-{{$image->id}}"><img src="{{ url($image->path) }}" width=200px height=200px style="border-right: 1px solid black;border-left: 1px solid black"></a>
+                               <img src="{{ url($image->path) }}" width=200px height=200px style="border-right: 1px solid black;border-left: 1px solid black;margin-left: 30px">
+                                    <a style="padding:20 0px;" href="{{ $image->name }}" data-toggle="modal" data-target="#exampleModalCenter-{{$image->id}}">
+                                        <span style="color: blue;background-color: red;padding: 3px 9px;border-radius: 20px;">X</span>
+                                    </a>
                                     <div class="modal fade" id="exampleModalCenter-{{$image->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                       <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">

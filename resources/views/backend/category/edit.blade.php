@@ -19,7 +19,7 @@
                 <!-- general form elements -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Sửa category</h3>
+                        <h3 class="card-title">Sửa danh mục</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -28,14 +28,14 @@
                         <input name="_method" type="hidden" value="PUT">
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Name: <span style="color: #dc3545;">*</span></label>
+                                <label>Tên danh mục: <span style="color: #dc3545;">*</span></label>
                                 @error('name')
                                     <a style="color: red;"> ! {{ $message }}</a>
                                 @enderror
                                 <input value="{{ $item->name }}" name="name" type="text" class="form-control" id="" placeholder="Tên category">
                             </div>
                             <div class="form-group">
-                                <label>parent category</label>
+                                <label>Danh mục cha</label>
                                 <select name="parent_id" class="form-control select2" style="width: 100%;">
                                     <option value="0">--Danh mục cha---</option>
                                     @foreach($categories as $category)
@@ -44,7 +44,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputFile">Thumbnail: <span style="color: #dc3545;">*</span></label>
+                                <label for="exampleInputFile">Ảnh: <span style="color: #dc3545;">*</span></label>
                                 <img style="height: 100px; width: 100px;" src="/{{ $item->thumbnail }}" name="img">
                                 @error('images')
                                     <a style="color: red;"> ! {{ $message }}</a>
@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Description: <span style="color: #dc3545;">*</span></label>
+                                <label>Mô tả: <span style="color: #dc3545;">*</span></label>
                                 @error('description')
                                     <a style="color: red;"> ! {{ $message }}</a>
                                 @enderror

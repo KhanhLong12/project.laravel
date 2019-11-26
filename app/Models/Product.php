@@ -21,7 +21,7 @@ class Product extends Model
     protected function images(){
     	return $this->hasMany(Image::class, 'product_id');
     }
-    protected function Order_detail(){
-        return $this->belongsTo(Order_detail::class);
+    protected function Order_details(){
+        return $this->hasMany(Order_detail::class);
     }
 }

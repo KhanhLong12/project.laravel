@@ -4,17 +4,17 @@
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Danh sách category <a href="{{ route('backend.category.create') }}"><i class="fas fa-plus" style="color: blue;font-size: 20px;"></i></a></h1>
                 @if(session()->has('success'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success" style="text-align: center;" role="alert">
                         {{ session()->get('success') }}
                     </div> 
                 @endif
                 @if(session()->has('success1'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success" style="text-align: center;" role="alert">
                         {{ session()->get('success1') }}
                     </div> 
                 @endif
                 @if(session()->has('success2'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success" style="text-align: center;" role="alert">
                         {{ session()->get('success2') }}
                     </div> 
                 @endif

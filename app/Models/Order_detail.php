@@ -11,7 +11,7 @@ class Order_detail extends Model
     protected function Order(){
     	return $this->belongsTo(Order::class);
     }
-    protected function products(){
-    	return $this->hasMany(Product::class);
+    protected function product(){
+    	return $this->belongsTo(Product::class);
     }
 }

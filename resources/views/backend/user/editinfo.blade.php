@@ -4,12 +4,12 @@
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Chỉnh sửa thông tin</h1>
                 @if(session()->has('success4'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success" style="text-align: center;" role="alert">
                         {{ session()->get('success4') }}
                     </div> 
                 @endif
                 @if(session()->has('success3'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success" style="text-align: center;" role="alert">
                         {{ session()->get('success3') }}
                     </div> 
                 @endif

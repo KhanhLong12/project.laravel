@@ -54,6 +54,9 @@ Route::prefix('admin')->namespace('Backend')->middleware('auth')->group(function
     });
     Route::prefix('bill')->group(function(){
       Route::get('','BillController@index')->name('backend.bill.index');
+      Route::get('/detailbill/{id}','BillController@detailbill')->name('backend.bill.detailbill');
+      Route::get('/editbill/{id}','BillController@edit')->name('backend.bill.editbill');
+      Route::put('/updatebill/{id}','BillController@update')->name('backend.bill.updatebill');
       Route::get('/billupdate/{id}','BillController@billupdate')->name('backend.bill.billupdate');
       Route::delete('/destroy/{id}','BillController@destroy')->name('backend.bill.destroy');
     });

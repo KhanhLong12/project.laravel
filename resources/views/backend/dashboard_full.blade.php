@@ -5,12 +5,12 @@
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">Dashboard</h1>
                         @if(session()->has('success3'))
-                            <div class="alert alert-success" role="alert">
+                            <div class="alert alert-success" style="text-align: center;" role="alert">
                                 {{ session()->get('success3') }}
                             </div> 
                         @endif
                          @if(session()->has('success5'))
-                            <div class="alert alert-success" role="alert">
+                            <div class="alert alert-success" style="text-align: center;" role="alert">
                                 {{ session()->get('success5') }}
                             </div> 
                         @endif
@@ -131,7 +131,9 @@
                                         <th>Thời gian</th>
                                         <th>hình ảnh</th>
                                         <th>Trang thái</th>
-                                        <th>hành động</th>
+                                        @if(Auth::user()->role == 1)
+                                            <th>hành động</th>
+                                        @endif
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -144,7 +146,6 @@
                                                 @if( isset($product->images[0]->path) )
                                                      <img height="100px" width="100px" src="/{{ $product->images[0]->path }}">
                                                      <br>
-                                                    <a href="{{ route('backend.product.images',$product->id) }}">Xem thêm</a>
                                                 @endif
                                             </td>
                                             <td>
@@ -156,7 +157,9 @@
                                                 hết hàng
                                                 @endif
                                             </td>
-                                            <td><a href="{{ route('backend.product.show', $product->id)}}" class="btn btn-info">Xem chi tiết</a></td>
+                                            @if(Auth::user()->role == 1)
+                                                <td><a href="{{ route('backend.product.show', $product->id)}}" class="btn btn-info">Xem chi tiết</a></td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                     </tbody>

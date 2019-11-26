@@ -4,22 +4,22 @@
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Danh sách sản phẩm  <a href="{{ route('backend.product.create') }}"><i class="fas fa-plus" style="color: blue;font-size: 20px;"></i></a></h1>
                 @if(session()->has('success4'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success" style="text-align: center;" role="alert">
                         {{ session()->get('success4') }}
                     </div> 
                 @endif
                 @if(session()->has('success1'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success" style="text-align: center;" role="alert">
                         {{ session()->get('success1') }}
                     </div> 
                 @endif
                 @if(session()->has('success2'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success" style="text-align: center;" role="alert">
                         {{ session()->get('success2') }}
                     </div> 
                 @endif
                 @if(session()->has('success5'))
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success" style="text-align: center;" role="alert">
                         {{ session()->get('success5') }}
                     </div> 
                 @endif

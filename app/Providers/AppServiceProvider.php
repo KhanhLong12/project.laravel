@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Category;
 use View;
+use App\Models\Order;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -31,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
         //     return $categories=Category::get();
         // });
         // $categories = Category::get();
+        $dembill = Order::Where('status',1)->count('status');
+        // dd($dembill);
         $categories1 = Category::get();
         // dd($categories1);
         $categories = Category::WHERE('parent_id', 0)->get();
@@ -38,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
         View::share([
             'categories' => $categories,
             'categories1' => $categories1,
+            'dembill' => $dembill
         ]);
     }
 }
